@@ -6,6 +6,14 @@ import { Button } from "~/components/button/Button";
 import Header from "~/components/header/Header";
 import Icon from "~/components/Icon/Icon";
 import { Table } from "~/components/table/Table";
+interface connection {
+  id: string;
+  devices: [];
+  connectionStatus: string;
+  req: [];
+  res: [];
+}
+
 interface device {
   id: string;
   name: string;
@@ -15,44 +23,33 @@ interface device {
 }
 
 const index = () => {
-  const [devices, setDevices] = useState<device[]>([]);
+  const [connections, setConnections] = useState<connection[]>([]);
   const [deleteFlag, setDeleteFlag] = useState(1);
 
   useEffect(() => {
-    const fetchDevices = async () => {
+    const fetchConnections = async () => {
       try {
-        const response = await fetch("http://localhost:4000/device");
+        const response = await fetch("http://localhost:4000/connection");
         const data = await response.json();
-        setDevices(data);
+        setConnections(data);
       } catch (error) {
         console.error(`Error fetching devices: ${error}`);
       }
     };
-    fetchDevices();
+    fetchConnections();
   }, [deleteFlag]);
 
-  const deleteDevice = async (id: string) => {
+  const deleteConnection = async (id: string) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/device/delete/${id}`,
+        `http://localhost:4000/connection/delete/${id}`,
         {
           method: "DELETE",
         }
       );
       setDeleteFlag(deleteFlag + 1);
     } catch (error) {
-      console.error(`Error deleting device with id ${id}: ${error}`);
-    }
-  };
-
-  const addNewDevice = async () => {
-    try {
-      const response = await fetch(`http://localhost:4000/device/create/`, {
-        method: "POST",
-      });
-      setDeleteFlag(deleteFlag + 1);
-    } catch (error) {
-      console.error(`Error creating device ${error}`);
+      console.error(`Error deleting connection with id ${id}: ${error}`);
     }
   };
 
@@ -63,24 +60,26 @@ const index = () => {
       <Header />
       <div className="h-screen w-screen bg-accent-strong">
         <div className="p-4 px-20">
-          <div>Your devices:</div>
+          <div>All connections</div>
           <Table
-            objects={devices || []}
-            titles={{ name: "name", status: "status" }}
-            onClick={(device) => {
-              router.push("/device/" + device.id);
+            objects={connections || []}
+            titles={{
+              devices: "",
+              connectionStatus: "Connection status",
             }}
-            actionRow={(device) => {
+            onClick={(connection) => {
+              router.push("/connection/" + connection.id);
+            }}
+            actionRow={(connection) => {
               return (
                 <>
-                  <Button onClick={() => deleteDevice(device.id)}>
+                  <Button onClick={() => deleteConnection(connection.id)}>
                     <Icon icon="delete" className="bg-info " />
                   </Button>
                 </>
               );
             }}
           ></Table>
-          <Button onClick={() => {}}>Add new device</Button>
         </div>
       </div>
     </div>

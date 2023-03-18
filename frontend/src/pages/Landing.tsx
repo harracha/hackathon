@@ -66,12 +66,6 @@ const Landing = () => {
             Log in Here
           </h1>
         </Link>
-
-        <Link href="/proba">
-          <h1 className="display2 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
-            Proba za Header i footer
-          </h1>
-        </Link>
       </div>
       <div>
         <h1 className="hidden">asdfasdfasdf</h1>

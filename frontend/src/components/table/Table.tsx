@@ -11,7 +11,7 @@ const TableHeader = ({
   <th
     className={classNames(
       right ? "text-right" : "text-left",
-      "body3 title1 flex-1 px-3 pt-3 pb-2 capitalize text-black"
+      "flex-1 px-1 pt-1 pb-1 text-sm capitalize text-black"
     )}
   >
     {children}
@@ -27,9 +27,9 @@ const TableRow = ({
 }) => (
   <tr
     className={classNames(
-      "flex border-t border-t-background px-3",
-      "cursor-pointer hover:bg-accent-medium",
-      header ? "bg-accent-weak" : "bg-section"
+      "flex border-t border-t-background px-1",
+      "text-back cursor-pointer hover:bg-info",
+      header ? "bg-info text-white" : "bg-accent"
     )}
   >
     {children}
@@ -49,8 +49,8 @@ const TableData = ({
     onClick={onClick}
     className={classNames(
       right ? "text-right" : "text-left",
-      "flex-1 py-4 px-3",
-      "body2 title1 text-black"
+      "flex-1 py-1 px-1",
+      "text-sm text-black"
     )}
   >
     {children}
@@ -72,7 +72,7 @@ export const Table = <T extends { [key: string]: any }>({
 
   return (
     <>
-      <div className="w-full border-collapse overflow-hidden overflow-x-scroll rounded-xl border border-background md:overflow-hidden">
+      <div className="border- w-full border-collapse overflow-hidden overflow-x-scroll rounded-xl border md:overflow-hidden">
         <table className="mt-[-1px] w-full">
           <thead>
             <TableRow header>

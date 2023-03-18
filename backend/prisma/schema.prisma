@@ -8,14 +8,17 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id           String     @id @default(uuid())
+  username     String
+  info         Json?
   email        String
-  avatar       String?
-  googleUserId String?
-  info         Json
   password     String
   userRole     UserRole
+  avatar       String?
+  googleUserId String?
   devices      Device[]
+  userStatus   UserStatus @default(PENDING)
+  keywords     String[]
 }
 
 model Device {
@@ -24,20 +27,51 @@ model Device {
   userId     String
   status     DeviceStatus
   user       User         @relation(fields: [userId], references: [id])
-  quarantine Threat[]
+  quarantine Req[]
+  connection Connection[] @relation("ConnectionToDevice")
 }
 
-model Threat {
-  id       String     @id @default(uuid())
-  deviceId String
-  type     ThreatType
-  device   Device     @relation(fields: [deviceId], references: [id])
+model Connection {
+  id               String           @id @default(uuid())
+  connectionStatus ConnectionStatus
+  req              Req[]
+  res              Res[]
+  device           Device[]         @relation("ConnectionToDevice")
+}
+
+model Req {
+  id           String      @id @default(uuid())
+  connectionId String
+  httpVersion  String
+  httpMethod   HTTPMethods
+  body         String
+  res          Res?
+  connection   Connection  @relation(fields: [connectionId], references: [id])
+  deviceId     String?
+  device       Device?     @relation(fields: [deviceId], references: [id])
+  isThreat     Boolean
+  threat       String?
+}
+
+model Res {
+  id           String     @id @default(uuid())
+  connectionId String
+  code         String
+  req          Req        @relation(fields: [reqId], references: [id])
+  reqId        String     @unique
+  connection   Connection @relation(fields: [connectionId], references: [id])
 }
 
 enum UserRole {
   DEFAULT
   ADMIN
   SUPERADMIN
+}
+
+enum UserStatus {
+  PENDING
+  ACTIVE
+  ARCHIVED
 }
 
 enum DeviceStatus {
@@ -49,4 +83,19 @@ enum ThreatType {
   HIGH
   MEDIUM
   LOW
+}
+
+enum ConnectionStatus {
+  ACTIVE
+  ARCHIVED
+  FLAGGED
+  PENDING
+}
+
+enum HTTPMethods {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
 }

@@ -1,11 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-<<<<<<< HEAD
-import Icon from "../Icon/Icon";
-=======
 import Icon, { IconName } from "../Icon/Icon";
->>>>>>> 52bddc45a9916e2a66648b22b78443b350abb0f9
 
 const Header = () => {
   return (
@@ -16,29 +12,7 @@ const Header = () => {
             href="/"
             className="hover:fill-text-accent-weak cursor-pointer fill-info
             text-info hover:text-accent-weak"
-          >
-<<<<<<< HEAD
-            <Icon icon="add" className="bg-info" />
-
-=======
->>>>>>> 52bddc45a9916e2a66648b22b78443b350abb0f9
-            {/* <Image
-              priority
-              src="/brainet_logo.png"
-              alt="Brainet logo"
-              width={80}
-              height={80}
-              className="cursor-pointer items-center justify-center bg-transparent  fill-info text-info hover:fill-accent-weak hover:text-accent-weak"
-            /> */}
-
-            {/* <Image
-              width={80}
-              height={80}
-              src="frontend/public/assets/logo.svg"
-              alt="Brainet logo"
-              className="cursor-pointer items-center justify-center bg-transparent fill-info text-info hover:fill-accent-weak hover:text-accent-weak"
-            /> */}
-          </Link>
+          ></Link>
         </div>
         <div className="flex w-full items-center justify-end pl-4">
           <ul className="w-ful flex items-center justify-between">

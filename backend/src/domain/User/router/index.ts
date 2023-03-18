@@ -46,7 +46,7 @@ router.post("/create", jsonParser, async (req, res) => {
   let user: UserEntity = {...await req.body, password : await bcrypt.hash(req.body.password, 10), verCode: verCode};
   let data: UserEntity = await createUserInteractor(repo, user);
 
-  const str = "http://localhost:4000/user/verCode/" + verCode;
+  const str = "http://localhost:4000/user/verCode/" + user.id + "/" + verCode;
   const html = `<h1>HŽV</h1>
       <p>za verifikaciju stisni na link</p>
       <a href="`+ str +`">dobar dan na hackathon</a>

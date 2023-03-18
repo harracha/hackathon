@@ -8,4 +8,5 @@ export type ReqEntity = {
   isThreat: boolean;
   connectionId: string;
   threat: string | null;
+  deviceId: string | null;
 };

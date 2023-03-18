@@ -12,8 +12,15 @@ import { updateConnectionEntity } from "../model/updateConnectionEntity";
 import updateConnectionInteractor from "../interactors/updateConnectionInteractor";
 import deleteConnectionInteractor from "../interactors/deleteConnectionInteractor";
 import archiveConnectionInteractor from "../interactors/archiveConnectionInteractor";
+import { ReqEntity } from "../../Req/model/ReqEntity";
+import { ResEntity } from "../../Res/model/ResEntity";
+import listReqsInConnectionInteractor from "../interactors/listReqsInConnectionInteractor";
+import ReqRepositoryPrisma from "../../Req/repo/ReqRepositoryPrisma";
+import { ReqRepository } from "../../Req/repo/ReqRepository";
+import respondToReqInteractor from "../interactors/respondToReqInteractor";
 
 const repo: ConnectionRepository = new ConnectionRepositoryPrisma();
+const reqRepo: ReqRepository = new ReqRepositoryPrisma();
 
 // middleware that is specific to this router
 router.use((req, res, next) => {
@@ -35,11 +42,35 @@ router.get("/:id", async (req, res) => {
   res.status(200).json(data);
 });
 
-router.post("/create", jsonParser, async (req, res) => {
+router.get("/reqs/:id", async (req, res) => {
+  let data: (ReqEntity & { res: ResEntity | null })[] | null =
+    await listReqsInConnectionInteractor(reqRepo, req.params.id);
+  res.status(200).json(data);
+});
+
+router.post("/reqs/respond/:id", jsonParser, async (req, res) => {
+  let response: ResEntity = req.body;
+  let data: ResEntity | null = await respondToReqInteractor(
+    reqRepo,
+    req.params.id,
+    response
+  );
+  res.status(200).json(data);
+});
+
+router.post("/connect", jsonParser, async (req, res) => {
   let connection: ConnectionEntity = await req.body;
   let data: ConnectionEntity = await createConnectionInteractor(
     repo,
     connection
+  );
+  res.status(200).json(data);
+});
+
+router.post("/disconnect/:id", async (req, res) => {
+  let data: ConnectionEntity | null = await archiveConnectionInteractor(
+    repo,
+    req.params.id
   );
   res.status(200).json(data);
 });

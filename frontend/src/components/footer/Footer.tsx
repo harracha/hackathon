@@ -4,8 +4,8 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <div className="absolute bottom-0 w-full">
-      <footer className="flex h-auto w-full items-center justify-center  bg-accent-strong px-8 text-white">
+    <div className="absolute bottom-0 h-[10%] w-full ">
+      <footer className="flex h-full w-full items-center justify-center  bg-accent-strong px-8 text-white">
         <div className=" flex h-full w-full items-center justify-between">
           <div>
             <div>
@@ -13,7 +13,7 @@ const Footer = () => {
             </div>
           </div>
           <div className=" flex h-3/4 items-center justify-between">
-            <div className="flex-col items-center justify-between">
+            <div className="w- full flex-col items-center justify-between">
               <div className="title3 pb-2">Made with love by</div>
               <Link
                 href="/developers"
@@ -27,7 +27,7 @@ const Footer = () => {
               alt="Logo CSS-ovci"
               width={80}
               height={80}
-              className="my-3 ml-5 h-full items-center justify-center rounded-2xl bg-transparent"
+              className="h-full items-center justify-center rounded-2xl bg-transparent"
             />
           </div>
         </div>

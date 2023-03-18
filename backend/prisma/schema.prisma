@@ -19,7 +19,6 @@ model User {
   keywords     String[]
   username     String
   devices      Device[]
-  verCode String?
 }
 
 model Device {
@@ -34,7 +33,7 @@ model Device {
 
 model Connection {
   id               String           @id @default(uuid())
-  connectionStatus ConnectionStatus
+  connectionStatus ConnectionStatus @default(PENDING)
   req              Req[]
   res              Res[]
   device           Device[]         @relation("ConnectionToDevice")

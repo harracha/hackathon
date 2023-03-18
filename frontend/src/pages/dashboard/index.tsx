@@ -24,8 +24,6 @@ const index = () => {
     const asd = await fetch("http://jsonplaceholder.typicode.com/users");
     var us = await fetch("http://localhost:4000/user");
     us = await us.json();
-    const f = JSON.stringify(us);
-    setS(JSON.parse(f));
   }
 
   useEffect(() => {
@@ -39,7 +37,7 @@ const index = () => {
       <div className="flex h-screen w-screen flex-col justify-center bg-black p-2">
         <div className="p flex h-full  w-full justify-start">
           <div className="h-[10%] w-[100%] rounded-xl bg-accent-strong p-3 ">
-            <h1 className="title1 text-info">Welcome back! {s?.email}</h1>
+            <h1 className="title1 text-info">Welcome back!</h1>
           </div>
         </div>
       </div>

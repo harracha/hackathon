@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import { json } from "stream/consumers";
+import { useRouter } from "next/navigation";
 
 type FormType = {
   username: string;
@@ -8,12 +9,33 @@ type FormType = {
 };
 
 const index = () => {
+  const router = useRouter();
+
   const [form, setForm] = useState<FormType>({
     username: "",
     password: "",
   });
+  const [ab, setAb] = useState("");
 
-  async function login(form: FormType) {}
+  async function login() {
+    console.log("uso u login");
+    const res = await fetch("http://localhost:4000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: form.username,
+        password: form.password,
+      }),
+    });
+    var ab = await res.json();
+    setAb(ab.uspjeh);
+    if (ab.uspjeh == true) {
+      router.push("/dashboard");
+    }
+    console.log(ab);
+  }
 
   return (
     <div className="flex h-screen w-screen ">
@@ -21,7 +43,8 @@ const index = () => {
         <div className="flex items-center justify-center">
           <h1 className="display3">Log in here</h1>
         </div>
-        <p>{JSON.stringify(form)}</p>
+        <p>{JSON.stringify(form) + ab}</p>
+        <p className="text-white">{ab}</p>
       </div>
       <div className="flex h-screen w-[45%] items-center justify-center bg-black shadow-2xl ">
         <div className="flex w-full flex-col">
@@ -45,6 +68,14 @@ const index = () => {
               }}
             />
           </div>
+          <button
+            onClick={() => {
+              login();
+            }}
+            className="border-2 border-accent-weak p-4 active:bg-accent-medium"
+          >
+            SIGN IN
+          </button>
         </div>
       </div>
     </div>

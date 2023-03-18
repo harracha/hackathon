@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <div
           data-aos="fade-up"
           data-aos-anchor-placement="top-center"
-          className="flex h-[40%] w-screen flex-col justify-center  p-10 px-40 pt-20 pb-40 "
+          className="flex h-screen w-screen flex-col justify-center  p-10 px-40 pt-20 pb-32 "
         >
           <div>
             <h1 className="display2 grad mb-2  flex items-center justify-center text-info ">
@@ -32,10 +32,10 @@ const Home: NextPage = () => {
             </p>
           </div>
           <div>
-            <p className="caption  flex justify-center text-center ">
+            <p className="caption2  flex justify-center text-center ">
               What is Lorem Ipsum?
             </p>
-            <p className="caption flex justify-center text-center">
+            <p className="caption2 flex justify-center text-center">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
           className="flex h-[60%] w-screen justify-center p-10 px-40"
         >
           <Link href="/login">
-            <h1 className="title1 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
+            <h1 className="display2 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
               Log in Here
             </h1>
           </Link>

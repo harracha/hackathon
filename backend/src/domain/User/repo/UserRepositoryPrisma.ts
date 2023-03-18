@@ -73,4 +73,21 @@ export default class UserRepositoryPrisma extends UserRepository {
       return response.info;
     }
   }
+  async update(data: updateUserEntity) {
+    let response = await prisma.user.update({
+      where: {
+        id: data.id
+      },
+      data: {
+        email: data.email,
+        info: data,
+        password: data.password,
+        userRole: data.userRole, //PROMJENITI U PENDING
+        avatar: data.avatar,
+        googleUserId: data.googleUserId,
+      }
+    })
+    let updated : UserEntity = response;
+    return updated
+  } 
 }

@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <h1 className="">Brainet</h1>
             {/* {isLandingPage() ? <></> : <Link href="/">About us</Link>} */}
-            <Link href="/" className="text">
+            <Link href="/" className="">
               About us
             </Link>
           </div>
@@ -18,15 +18,17 @@ const Footer = () => {
         </div>
         <div className=" flex h-3/4 items-center justify-between">
           <div className="flex-col items-center justify-between">
-            <div>Made with love by</div>
-            <div>CSS-ovci</div>
+            <div className="title3 pb-2">Made with love by</div>
+            <Link href="/developers" className="text-info">
+              <div className="title3 pl-8">CSS-ovci</div>
+            </Link>
           </div>
           <Image
             src="/Logo_CSS-ovci.jpg"
             alt="Logo CSS-ovci"
             width={80}
             height={80}
-            className="ml-3 h-full items-center justify-center bg-transparent"
+            className="my-3 ml-5 h-full items-center justify-center rounded-2xl bg-transparent"
           />
         </div>
       </div>

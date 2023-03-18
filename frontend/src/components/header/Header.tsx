@@ -4,10 +4,10 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="flex h-24 w-full items-center justify-center bg-accent-strong px-8 text-white">
+    <header className="flex h-24 w-full items-center justify-center bg-accent px-8 text-white">
       <div className=" flex w-full items-center justify-between">
         <div className="flex items-center justify-center">
-          <Link href="#">
+          <Link href="/">
             <Image
               src="/brainet_logo.png"
               alt="Picture of the author"

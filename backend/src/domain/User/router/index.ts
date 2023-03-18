@@ -61,6 +61,12 @@ router.patch("/admin/approve/:id", jsonParser, async (req, res) => {
   res.status(200).json(data);
 });
 
+router.patch("/admin/giveAdmin/:id", jsonParser, async (req, res) => {
+  let userId = req.params.id;
+  let data: UserEntity | null = await approveUserInteractor(repo, userId);
+  res.status(200).json(data);
+});
+
 router.delete("/delete/:id", jsonParser, async (req, res) => {
   let userId = req.params.id;
   let data: UserEntity | null = await deleteUserInteractor(repo, userId);

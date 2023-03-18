@@ -90,82 +90,71 @@ export default class UserRepositoryPrisma extends UserRepository {
         userRole: data.userRole, //PROMJENITI U PENDING
         avatar: data.avatar,
         googleUserId: data.googleUserId,
-<<<<<<< HEAD
         keywords: data.keywords,
         userStatus: data.userStatus,
       },
     });
     let updated: UserEntity = response;
     return updated;
-=======
-      }
-    })
-    let updated : UserEntity = response;
-    return updated
-  } 
+  }
 
-  async delete(id:string) {
+  async delete(id: string) {
     let response = await prisma.user.delete({
-      where: { id: id}
-    })
-    if (response){
-      let deletedUser: UserEntity = response
-      return deletedUser
-    }
-    else {
+      where: { id: id },
+    });
+    if (response) {
+      let deletedUser: UserEntity = response;
+      return deletedUser;
+    } else {
       return null;
     }
   }
-  async archive(id:string) {
+  async archive(id: string) {
     let response = await prisma.user.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
-        userStatus: UserStatus.ARCHIVED
-      }
-    })
+        userStatus: UserStatus.ARCHIVED,
+      },
+    });
     if (response) {
-      let archivedUser: UserEntity = response
-      return archivedUser
-    }
-    else {
+      let archivedUser: UserEntity = response;
+      return archivedUser;
+    } else {
       return null;
     }
   }
-  async approve(id:string) {
+  async approve(id: string) {
     let response = await prisma.user.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
-        userStatus: UserStatus.ACTIVE
-      }
-    })
+        userStatus: UserStatus.ACTIVE,
+      },
+    });
     if (response) {
-      let archivedUser: UserEntity = response
-      return archivedUser
-    }
-    else {
+      let archivedUser: UserEntity = response;
+      return archivedUser;
+    } else {
       return null;
     }
   }
-  async giveAdmin(id:string) {
+  async giveAdmin(id: string) {
     let response = await prisma.user.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
-        userRole: UserRole.ADMIN
-      }
-    })
+        userRole: UserRole.ADMIN,
+      },
+    });
     if (response) {
-      let archivedUser: UserEntity = response
-      return archivedUser
-    }
-    else {
+      let archivedUser: UserEntity = response;
+      return archivedUser;
+    } else {
       return null;
     }
->>>>>>> ee4ebfb00a9b62934a6ac19fc473d05235933a30
   }
 }

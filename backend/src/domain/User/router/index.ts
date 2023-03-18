@@ -14,6 +14,10 @@ import deleteUserInteractor from "../interactors/deleteUserInteractor";
 import archiveUserInteractor from "../interactors/archiveUserInteractor";
 import approveUserInteractor from "../interactors/approveUserInteractor";
 import giveAdminInteractor from "../interactors/giveAdminInteractor";
+import checkVercodeInteractor from "../interactors/checkVercodeInteractor";
+import { generateRandomString } from "../../../auth/auth";
+import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 
 const repo: UserRepository = new UserRepositoryPrisma();
 
@@ -38,9 +42,42 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/create", jsonParser, async (req, res) => {
-  
-  let user: UserEntity = await req.body;
+  const verCode = generateRandomString(16);
+  let user: UserEntity = {
+    ...(await req.body),
+    password: await bcrypt.hash(req.body.password, 10),
+    verCode: verCode,
+  };
   let data: UserEntity = await createUserInteractor(repo, user);
+
+  const str = "http://localhost:4000/user/verCode/" + user.id + "/" + verCode;
+  const html =
+    `<h1>HŽV</h1>
+      <p>za verifikaciju stisni na link</p>
+      <a href="` +
+    str +
+    `">dobar dan na hackathon</a>
+    `;
+
+  const transporter = nodemailer.createTransport({
+    host: "smtp.office365.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: "brainet_user_link@outlook.com",
+      pass: "Brainetlozinka",
+    },
+  });
+
+  const mailOptions = {
+    from: "brainet_user_link@outlook.com",
+    to: user.email,
+    subject: "Verification",
+    html: html,
+  };
+
+  await transporter.sendMail(mailOptions);
+
   res.status(200).json(data);
 });
 
@@ -72,6 +109,15 @@ router.patch("/admin/giveAdmin/:id", jsonParser, async (req, res) => {
 router.delete("/delete/:id", jsonParser, async (req, res) => {
   let userId = req.params.id;
   let data: UserEntity | null = await deleteUserInteractor(repo, userId);
+  res.status(200).json(data);
+});
+
+router.get("/user/verCode/:userId/:verCode", async (req, res) => {
+  let data: boolean = await checkVercodeInteractor(
+    repo,
+    req.params.userId,
+    req.params.verCode
+  );
   res.status(200).json(data);
 });
 

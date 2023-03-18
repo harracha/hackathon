@@ -67,7 +67,7 @@ router.post("/connect", jsonParser, async (req, res) => {
   res.status(200).json(data);
 });
 
-router.post("/disconnect/:id", async (req, res) => {
+router.patch("/disconnect/:id", async (req, res) => {
   let data: ConnectionEntity | null = await archiveConnectionInteractor(
     repo,
     req.params.id

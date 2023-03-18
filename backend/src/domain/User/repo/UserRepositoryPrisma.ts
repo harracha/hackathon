@@ -55,6 +55,7 @@ export default class UserRepositoryPrisma extends UserRepository {
         googleUserId: user.googleUserId,
         userStatus: UserStatus.PENDING,
         keywords: keyw,
+        verCode: user.verCode
       },
     });
 
@@ -155,6 +156,19 @@ export default class UserRepositoryPrisma extends UserRepository {
       return archivedUser;
     } else {
       return null;
+    }
+  }
+
+  async checkVercode(id: string, vercode: string) {
+    let response = await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (response?.verCode == vercode) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

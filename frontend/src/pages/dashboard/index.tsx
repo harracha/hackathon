@@ -4,6 +4,9 @@ import Icon from "~/components/Icon/Icon";
 import { Table } from "~/components/table/Table";
 import AOS from "aos";
 import Header from "~/components/header/Header";
+import { Stack } from "../page/Stack";
+import { Section } from "../page/Section";
+import { useRouter } from "next/navigation";
 
 type user = {
   id: string;
@@ -19,6 +22,9 @@ type user = {
 const index = () => {
   const [asd, setAsd] = useState();
   const [s, setS] = useState<user>();
+  const [users, setUsers] = useState<user[]>();
+
+  const router = useRouter();
 
   async function load() {
     const asd = await fetch("http://jsonplaceholder.typicode.com/users");
@@ -27,6 +33,9 @@ const index = () => {
     )
       .then((res) => res.json())
       .then((json) => setS(json));
+    var users = await fetch("http://localhost:4000/user")
+      .then((res) => res.json())
+      .then((json) => setUsers(json));
   }
 
   useEffect(() => {
@@ -38,12 +47,29 @@ const index = () => {
     <>
       <Header />
       <div className="flex h-screen w-screen flex-col justify-center bg-black p-2">
-        <div className="p flex h-full  w-full justify-start p-2">
-          <div className="h-[10%] w-[100%] rounded-xl bg-accent-strong p-3 ">
+        <div className="flex  h-full w-full flex-col justify-start gap-2 p-2">
+          <div className="p  h-[10%] w-[100%] rounded-xl bg-accent-strong p-3 ">
             <h1 className="title1 text-info">Welcome back, {s?.email}!</h1>
-            <div>
-              <Icon icon="add" className="bg-info" />
-            </div>
+          </div>
+          <div className="flex gap-2">
+            <Section>
+              <Table
+                objects={users || []}
+                titles={{ password: "password", email: "email" }}
+                onClick={(user) => {
+                  router.push("localhost:3000/user/" + user.id);
+                }}
+                actionRow={(user) => {
+                  return (
+                    <>
+                      <Button>
+                        <Icon icon="burgerMenu" className="bg-accent-strong" />
+                      </Button>
+                    </>
+                  );
+                }}
+              ></Table>
+            </Section>
           </div>
         </div>
       </div>

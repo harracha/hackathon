@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+	@apply text-neutral;
+}
+
+.display1 {
+	@apply font-roobert font-[900] md:text-[120px] md:leading-[120px] text-[48px] leading-[48px];
+}
+
+.display2 {
+	@apply font-roobert font-[900] md:text-[64px] md:leading-[64px] text-[32px] leading-[32px];
+}
+
+.display3 {
+	@apply font-roobert font-[600] md:text-[48px] md:leading-[48px] text-[28px] leading-[32px];
+}
+
+.title1 {
+	@apply font-roobert font-[700] md:text-[20px] md:leading-[24px] text-[18px] leading-[24px];
+}
+
+.title2 {
+	@apply font-roobert font-[600] md:text-[18px] md:leading-[24px] text-[16px] leading-[20px];
+}
+
+.title3 {
+	@apply font-roobert font-[600] md:text-[16px] md:leading-[20px] text-[15px] leading-[20px];
+}
+
+.body1 {
+	@apply font-roobert font-[400] md:text-[16px] md:leading-[20px] text-[15px] leading-[20px];
+}
+
+.body2 {
+	@apply font-roobert font-[400] md:text-[15px] md:leading-[20px] text-[13px] leading-[18px];
+}
+
+.body3 {
+	@apply font-roobert font-[600] md:text-[13px] md:leading-[18px] text-[12px] leading-[16px];
+}
+
+.caption {
+	@apply font-roobert font-[600] md:text-[12px] md:leading-[16px] text-[11px] leading-[16px] tracking-[-0.2px];
+}
+
+.button-large {
+	@apply font-roobert font-[600] md:text-[15px] md:leading-[20px] text-[15px] leading-[20px];
+}
+
+.button-small {
+	@apply font-roobert font-[600] md:text-[13px] md:leading-[17px] text-[12px] leading-[16px];
+}
+
+a {
+	@apply text-accent;
+}
+
+body {
+	overflow-x: hidden;
+}

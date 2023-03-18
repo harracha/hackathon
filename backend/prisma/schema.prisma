@@ -13,7 +13,7 @@ model User {
   info         Json?
   email        String
   password     String
-  userRole     UserRole
+  userRole     UserRole @default(DEFAULT)
   avatar       String?
   googleUserId String?
   devices       Device[]

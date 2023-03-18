@@ -15,4 +15,7 @@ export abstract class UserRepository {
   async getUserInfo(id: string): Promise<Prisma.JsonValue | null> {
     throw new Error("Method not implemented.");
   }
+  async update(user: updateUserEntity): Promise<UserEntity> {
+    throw new Error("Method not implemented.");
+  }
 }

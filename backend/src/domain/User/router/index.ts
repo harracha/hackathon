@@ -22,6 +22,7 @@ import listAllFlaggedInteractor from "../interactors/listAllFlaggedInteractor";
 import ReqRepositoryPrisma from "../../Req/repo/ReqRepositoryPrisma";
 import { ReqRepository } from "../../Req/repo/ReqRepository";
 import { ReqEntity } from "../../Req/model/ReqEntity";
+import { ResEntity } from "../../Res/model/ResEntity";
 
 const repo: UserRepository = new UserRepositoryPrisma();
 const reqRepo: ReqRepository = new ReqRepositoryPrisma();
@@ -123,11 +124,14 @@ router.get("/verCode/:userId/:verCode", async (req, res) => {
     req.params.userId,
     req.params.verCode
   );
-  res.status(200).json(data);
+  if (data) {
+    res.redirect("/login");
+  }
 });
 
 router.get("/flagged", async (req, res) => {
-  let data: ReqEntity[] = await listAllFlaggedInteractor(reqRepo);
+  let data: (ReqEntity & { res: ResEntity | null })[] =
+    await listAllFlaggedInteractor(reqRepo);
   res.status(200).json(data);
 });
 

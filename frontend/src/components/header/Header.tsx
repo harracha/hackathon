@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Icon from "../Icon/Icon";
 
 const Header = () => {
   return (
@@ -12,14 +13,16 @@ const Header = () => {
             className="hover:fill-text-accent-weak cursor-pointer fill-info
             text-info hover:text-accent-weak"
           >
-            <Image
+            <Icon icon="add" className="bg-info" />
+
+            {/* <Image
               priority
               src="/brainet_logo.png"
               alt="Brainet logo"
               width={80}
               height={80}
               className="cursor-pointer items-center justify-center bg-transparent  fill-info text-info hover:fill-accent-weak hover:text-accent-weak"
-            />
+            /> */}
 
             {/* <Image
               width={80}

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button } from "~/components/button/Button";
 import Icon from "~/components/Icon/Icon";
 import { Table } from "~/components/table/Table";
+import AOS from "aos";
+import Header from "~/components/header/Header";
 
 const index = () => {
   const [asd, setAsd] = useState();
@@ -16,24 +18,18 @@ const index = () => {
 
   useEffect(() => {
     load();
+    AOS.init();
   }, []);
 
   return (
-    <div className="flex h-screen w-screen flex-col justify-center bg-accent-strong p-10">
-      <Table
-        objects={[{ stari: "alo" }, { stari: "asdf" }]}
-        titles={{
-          stari: "stari",
-        }}
-        actionRow={(user) => (
-          <>
-            <Button>
-              <Icon icon="burgerMenu" className="bg-black" />
-            </Button>
-          </>
-        )}
-      />
-    </div>
+    <>
+      <Header />
+      <div className="flex h-screen w-screen flex-col justify-center bg-accent-strong p-2">
+        <div className="flex h-full w-full  justify-start p-2">
+          <div className="h-[10%] w-[100%] rounded-xl bg-accent "></div>
+        </div>
+      </div>
+    </>
   );
 };
 

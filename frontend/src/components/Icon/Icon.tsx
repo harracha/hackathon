@@ -54,7 +54,7 @@ export const Icon: React.FC<{
   return (
     <div
       className={"transition-all duration-200 ease-in ".concat(
-        className ? className : "bg-neutral"
+        className ? className : "bg-accent-medium"
       )}
       style={{
         height: size ? size : "24px",

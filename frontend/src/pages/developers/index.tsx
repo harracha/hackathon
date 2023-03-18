@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import Header from "../components/header/Header";
+import Header from "../../components/header/Header";
 
-const developers = () => {
+const index = () => {
   return (
     <div className="h-screen flex-col items-center justify-between">
       <Header></Header>
@@ -22,4 +22,4 @@ const developers = () => {
   );
 };
 
-export default developers;
+export default index;

@@ -13,4 +13,5 @@ export type updateUserEntity = {
   devices?: Device[];
   userStatus?: UserStatus;
   keywords?: string[];
+  verCode?: string
 };

@@ -19,3 +19,16 @@ Content-Type: application/json
   "name": "Kyle",
   "password": "password"
 }
+
+
+###
+
+POST http://localhost:4000/user/create
+Content-Type: application/json
+
+{
+  "username": "filip",
+  "email": "filip.burgler123@gmail.com",
+  "password": "pass",
+  "avatar": "avatar"
+}

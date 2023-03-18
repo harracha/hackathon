@@ -13,4 +13,5 @@ export type UserEntity = {
   devices?: Device[];
   userStatus: UserStatus;
   keywords: string[];
+  verCode?: string | null
 };

@@ -55,6 +55,7 @@ export default class UserRepositoryPrisma extends UserRepository {
         googleUserId: user.googleUserId,
         userStatus: UserStatus.PENDING,
         keywords: keyw,
+        verCode: user.verCode
       },
     });
 

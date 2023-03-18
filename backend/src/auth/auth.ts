@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv'; 
 const jwt = require('jsonwebtoken');
 import nodemailer from 'nodemailer';
+import crypto from 'crypto';
 
 dotenv.config();
 
@@ -89,4 +90,8 @@ function authenticateToken(req: Request, res: Response, next: NextFunction){
   })
 }
 
-export { router as auth };
+const generateRandomString = (length: number): string => {
+  return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
+};
+
+export { router as auth, generateRandomString as generateRandomString };

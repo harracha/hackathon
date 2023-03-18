@@ -18,6 +18,7 @@ model User {
   userStatus   UserStatus @default(PENDING)
   keywords     String[]
   username     String
+  verCode      String?
   devices      Device[]
 }
 

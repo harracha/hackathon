@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Icon, { IconName } from "../Icon/Icon";
 
 const Header = () => {
   return (

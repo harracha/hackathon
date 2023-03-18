@@ -7,7 +7,6 @@ import {
 import { updateConnectionEntity } from "../model/updateConnectionEntity";
 import { ConnectionEntity } from "../model/ConnectionEntity";
 import { ConnectionRepository } from "./ConnectionRepository";
-import keywords from "../../../../../keywords.json";
 
 const prisma = new PrismaClient();
 
@@ -29,7 +28,7 @@ export default class ConnectionRepositoryPrisma extends ConnectionRepository {
   async getById(id: string) {
     let data = await prisma.connection.findUnique({
       where: { id: id },
-      select: { device: true, req: true, res: true },
+      include: { device: true, req: true, res: true },
     });
     if (data) {
       let connection: ConnectionEntity & {

@@ -1,11 +1,11 @@
-import { UserEntity } from "../model/UserEntity";
-import { UserRepository } from "../repo/UserRepository";
+import { ConnectionEntity } from "../model/ConnectionEntity";
+import { ConnectionRepository } from "../repo/ConnectionRepository";
 
-export default async function createUserInteractor(
-  userRepository: UserRepository,
-  user: UserEntity
+export default async function createConnectionInteractor(
+  connectionRepository: ConnectionRepository,
+  connection: ConnectionEntity
 ) {
-  console.log(user.id);
-  let users = await userRepository.create(user);
-  return users;
+  console.log(connection.id);
+  let connections = await connectionRepository.create(connection);
+  return connections;
 }

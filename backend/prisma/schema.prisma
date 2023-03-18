@@ -9,9 +9,9 @@ datasource db {
 
 model User {
   id           String   @id @default(uuid())
-  username     String @unique
+  username     String
   info         Json?
-  email        String   @unique
+  email        String
   password     String
   userRole     UserRole
   avatar       String?
@@ -27,16 +27,8 @@ model Device {
   userId     String
   status     DeviceStatus
   user       User         @relation(fields: [userId], references: [id])
-  quarantine Threat[]
+  quarantine Req[]
   connection Connection[] @relation("ConnectionToDevice")
-}
-
-model Threat {
-  id       String     @id @default(uuid())
-  deviceId String
-  type     ThreatType
-  info     Json
-  device   Device     @relation(fields: [deviceId], references: [id])
 }
 
 model Connection {
@@ -55,6 +47,10 @@ model Req {
   body String
   res Res?
   connection       Connection @relation(fields: [connectionId], references: [id])
+  deviceId String?
+  device Device?   @relation(fields: [deviceId], references: [id])
+  isThreat Boolean
+  threat String?
 }
 
 model Res {

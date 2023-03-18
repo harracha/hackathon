@@ -20,6 +20,24 @@ export default class ReqRepositoryPrisma extends ReqRepository {
     return reqs;
   }
 
+  async getFlagged() {
+    // prisma Reqs
+    let datas = await prisma.req.findMany({
+      where: {
+        isThreat: true,
+      },
+    });
+
+    // map to ReqEntities
+    let reqs: ReqEntity[] = [];
+    datas.forEach((data: Req) => {
+      let req: ReqEntity = data;
+      reqs.push(req);
+    });
+
+    return reqs;
+  }
+
   async getById(id: string) {
     let data = await prisma.req.findUnique({
       where: { id: id },
@@ -39,7 +57,13 @@ export default class ReqRepositoryPrisma extends ReqRepository {
     let response = await prisma.req.create({
       data: {
         id: req.id,
-        reqStatus: ReqStatus.PENDING,
+        connectionId: req.connectionId,
+        httpVersion: req.httpVersion,
+        httpMethod: req.httpMethod,
+        body: req.body,
+        deviceId: req.deviceId,
+        isThreat: req.isThreat,
+        threat: req.threat,
       },
     });
 
@@ -53,7 +77,13 @@ export default class ReqRepositoryPrisma extends ReqRepository {
         id: data.id,
       },
       data: {
-        reqStatus: data.reqStatus,
+        connectionId: data.connectionId,
+        httpVersion: data.httpVersion,
+        httpMethod: data.httpMethod,
+        body: data.body,
+        deviceId: data.deviceId,
+        isThreat: data.isThreat,
+        threat: data.threat,
       },
     });
     let updated: ReqEntity = response;
@@ -71,13 +101,13 @@ export default class ReqRepositoryPrisma extends ReqRepository {
       return null;
     }
   }
-  async archive(id: string) {
+  async flag(id: string) {
     let response = await prisma.req.update({
       where: {
         id: id,
       },
       data: {
-        reqStatus: ReqStatus.ARCHIVED,
+        isThreat: true ? false : true,
       },
     });
     if (response) {

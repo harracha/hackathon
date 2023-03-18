@@ -5,6 +5,8 @@ export type updateReqEntity = {
   httpVersion?: string;
   httpMethod?: HTTPMethods;
   body?: string;
-  isThreat?: string;
-  threat?: string;
+  isThreat?: boolean;
+  connectionId?: string;
+  threat?: string | null;
+  deviceId?: string | null;
 };

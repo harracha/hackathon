@@ -10,7 +10,7 @@ datasource db {
 model User {
   id           String     @id @default(uuid())
   info         Json?
-  email        String
+  email        String     @unique
   password     String
   userRole     UserRole
   avatar       String?
@@ -18,8 +18,8 @@ model User {
   userStatus   UserStatus @default(PENDING)
   keywords     String[]
   username     String
-  devices      Device[]
   verCode      String?
+  devices      Device[]
 }
 
 model Device {

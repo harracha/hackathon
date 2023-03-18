@@ -18,8 +18,13 @@ import checkVercodeInteractor from "../interactors/checkVercodeInteractor";
 import { generateRandomString } from "../../../auth/auth";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import listAllFlaggedInteractor from "../interactors/listAllFlaggedInteractor";
+import ReqRepositoryPrisma from "../../Req/repo/ReqRepositoryPrisma";
+import { ReqRepository } from "../../Req/repo/ReqRepository";
+import { ReqEntity } from "../../Req/model/ReqEntity";
 
 const repo: UserRepository = new UserRepositoryPrisma();
+const reqRepo: ReqRepository = new ReqRepositoryPrisma();
 
 // middleware that is specific to this router
 router.use((req, res, next) => {
@@ -112,12 +117,17 @@ router.delete("/delete/:id", jsonParser, async (req, res) => {
   res.status(200).json(data);
 });
 
-router.get("/user/verCode/:userId/:verCode", async (req, res) => {
+router.get("/verCode/:userId/:verCode", async (req, res) => {
   let data: boolean = await checkVercodeInteractor(
     repo,
     req.params.userId,
     req.params.verCode
   );
+  res.status(200).json(data);
+});
+
+router.get("/flagged", async (req, res) => {
+  let data: ReqEntity[] = await listAllFlaggedInteractor(reqRepo);
   res.status(200).json(data);
 });
 

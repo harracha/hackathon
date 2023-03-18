@@ -4,6 +4,7 @@ import { userInfo } from "./userInfo";
 export type UserEntity = {
   id: string;
   email: string;
+  username: string;
   info: userInfo;
   password: string;
   userRole: UserRole;
@@ -11,4 +12,5 @@ export type UserEntity = {
   googleUserId?: string | null;
   devices?: Device[];
   userStatus: UserStatus;
+  keywords: string[];
 };

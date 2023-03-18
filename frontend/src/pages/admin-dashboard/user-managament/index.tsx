@@ -23,9 +23,13 @@ const index = () => {
   const router = useRouter();
 
   async function load() {
-    var users = await fetch("http://localhost:4000/user")
-      .then((res) => res.json())
-      .then((json) => setUsers(json));
+    try {
+      var users = await fetch("http://localhost:4000/user")
+        .then((res) => res.json())
+        .then((json) => setUsers(json));
+    } catch (error) {
+      console.error(`Error while loading all users ${error}`);
+    }
   }
 
   async function deleteUser(id: string) {

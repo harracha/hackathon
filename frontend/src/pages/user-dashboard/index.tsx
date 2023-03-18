@@ -6,6 +6,7 @@ import { Button } from "~/components/button/Button";
 import Header from "~/components/header/Header";
 import Icon from "~/components/Icon/Icon";
 import { Table } from "~/components/table/Table";
+import Link from "next/link";
 interface device {
   id: string;
   name: string;
@@ -61,14 +62,20 @@ const index = () => {
   return (
     <div>
       <Header />
+
       <div className="h-screen w-screen bg-accent-strong">
         <div className="p-4 px-20">
+          <div className="h-20% w-full bg-accent-strong p-4">
+            <Link href="/user-dashboard/device-management/createDevice">
+              <Button>Add New Device</Button>
+            </Link>
+          </div>
           <div>Your devices:</div>
           <Table
             objects={devices || []}
             titles={{ name: "name", status: "status" }}
             onClick={(device) => {
-              router.push("/device/" + device.id);
+              router.push("user-dashboard/device/" + device.id);
             }}
             actionRow={(device) => {
               return (
@@ -80,7 +87,6 @@ const index = () => {
               );
             }}
           ></Table>
-          <Button onClick={() => {}}>Add new device</Button>
         </div>
       </div>
     </div>

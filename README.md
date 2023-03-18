@@ -40,9 +40,20 @@ _CSS-ovci_
 2. Change directories so that backend directory is the root folder
 3. Enter these commands:
 
+- if you are using npm
+
 ```
 npx prisma generate
+npm install
 npm run dev
+```
+
+- if you are using yarn
+
+```
+npx prisma generate
+yarn install
+yarn run dev
 ```
 
 4. Change directories so that the frontend directory is the root folder

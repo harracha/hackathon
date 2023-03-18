@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User, UserRole } from "@prisma/client";
 import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
 import { UserRepository } from "./UserRepository";
-import { User } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -32,17 +31,39 @@ export default class UserRepositoryPrisma extends UserRepository {
   }
 
   async create(user: UserEntity) {
-    let response = await prisma.user.create({
+     let response = await prisma.user.create({
       data: {
         id: user.id,
         email: user.email,
-        name: user.name,
+        info: user.info,
+        password: user.password,
+        userRole: UserRole.DEFAULT, //PROMJENITI U PENDING 
+        avatar: user.avatar,
+        googleUserId: user.googleUserId,
+        Device: undefined
       },
     });
 
-    console.log(response);
+    let out: UserEntity  = response;
+    return out; 
+  }
+  async getUserInfo(id: String) {
+    let response = await prisma.user.findUnique({
+      where: {
+        id: id
+      },
+      select: {
+        info: true
+      }
+    });
 
-    let out: UserEntity = response;
-    return out;
+    if (response === null) {
+      return null
+    }
+    else {
+      return response.info
+    }
+
+    
   }
 }

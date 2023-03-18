@@ -1,11 +1,5 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-<<<<<<< HEAD
-import Icon from "../Icon/Icon";
-=======
-import Icon, { IconName } from "../Icon/Icon";
->>>>>>> 51e97081f0d8a9c405b841b612310d430f5e0161
 
 const Header = () => {
   return (

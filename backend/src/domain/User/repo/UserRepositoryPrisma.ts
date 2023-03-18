@@ -1,5 +1,10 @@
-import { Prisma, PrismaClient, User, UserRole } from "@prisma/client";
-import { infoObject } from "../model/infoObject";
+import {
+  Prisma,
+  PrismaClient,
+  User,
+  UserRole,
+  UserStatus,
+} from "@prisma/client";
 import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
 import { UserRepository } from "./UserRepository";
@@ -42,9 +47,10 @@ export default class UserRepositoryPrisma extends UserRepository {
         email: user.email,
         info: info,
         password: user.password,
-        userRole: UserRole.DEFAULT, //PROMJENITI U PENDING
+        userRole: UserRole.DEFAULT,
         avatar: user.avatar,
         googleUserId: user.googleUserId,
+        userStatus: UserStatus.PENDING,
       },
     });
 

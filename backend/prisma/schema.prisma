@@ -16,6 +16,7 @@ model User {
   avatar       String?
   googleUserId String?
   devices       Device[]
+  userStatus UserStatus @default(PENDING)
 }
 
 model Device {
@@ -40,7 +41,6 @@ model Connection {
   id               String           @id @default(uuid())
   device           Device[]
   connectionStatus ConnectionStatus
-  connectionType   ConnectionType
   req              Req[]
   res              Res[]
 }
@@ -64,10 +64,14 @@ model Res {
 }
 
 enum UserRole {
-  PENDING
   DEFAULT
   ADMIN
-  SUPERADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  ARCHIVED
+  PENDING
 }
 
 enum DeviceStatus {
@@ -82,12 +86,8 @@ enum ThreatType {
   LOW
 }
 
-enum ConnectionType {
-  INNER
-  OUTER
-}
-
 enum ConnectionStatus {
+  PENDING
   ACTIVE
   ARCHIVED
   FLAGGED

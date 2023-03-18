@@ -8,7 +8,11 @@ import Landing from "./Landing";
 
 const Home: NextPage = () => {
   return (
-    <>
+    <div
+      className="bg-gradient-to-br
+    from-accent-strong
+    to-black"
+    >
       <Head>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <link

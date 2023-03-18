@@ -8,18 +8,16 @@ const Footer = () => {
       <div className=" flex h-full w-full items-center justify-between">
         <div>
           <div>
-            <h1 className="">Brainet</h1>
-            {/* {isLandingPage() ? <></> : <Link href="/">About us</Link>} */}
-            <Link href="/" className="">
-              About us
-            </Link>
+            <h1 className="title1 dfsafddfadfas text-info">Brainet</h1>
           </div>
-          <div>News letter</div>
         </div>
         <div className=" flex h-3/4 items-center justify-between">
           <div className="flex-col items-center justify-between">
             <div className="title3 pb-2">Made with love by</div>
-            <Link href="/developers" className="text-info">
+            <Link
+              href="/developers"
+              className="cursor-pointer text-info hover:text-accent-weak"
+            >
               <div className="title3 pl-8">CSS-ovci</div>
             </Link>
           </div>

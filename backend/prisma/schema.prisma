@@ -15,52 +15,59 @@ model User {
   userRole     UserRole
   avatar       String?
   googleUserId String?
-  Device       Device[]
+  device       Device[]
 }
 
 model Device {
-  id         String       @id
+  id         String       @id @default(uuid())
   name       String
+  quarantine Threat[]
   userId     String
+  user       User         @relation(fields: [userId], references: [id])
   status     DeviceStatus
-  User       User         @relation(fields: [userId], references: [id])
-  Threat     Threat[]
-  Connection Connection[]
+  connection Connection[]
 }
 
 model Threat {
-  id       String     @id
+  id       String     @id @default(uuid())
+  device   Device     @relation(fields: [deviceId], references: [id])
   deviceId String
   type     ThreatType
   info     Json
-  Device   Device     @relation(fields: [deviceId], references: [id])
 }
 
 model Connection {
-  id               String           @id
+  id               String           @id @default(uuid())
+  device           Device[]
   connectionStatus ConnectionStatus
   connectionType   ConnectionType
-  Req              Req[]
-  Res              Res[]
-  Device           Device[]
+  req              Req[]
+  res              Res[]
 }
 
 model Req {
-  id               String     @id
+  id               String     @id @default(uuid())
+  connection       Connection @relation(fields: [connectionId], references: [id])
   connectionId     String
   senderDeviceId   String
   receiverDeviceId String
   reqExpress       Json
-  Connection       Connection @relation(fields: [connectionId], references: [id])
 }
 
 model Res {
-  id               String     @id
+  id               String     @id @default(uuid())
+  connection       Connection @relation(fields: [connectionId], references: [id])
   connectionId     String
   senderDeviceId   String
   receiverDeviceId String
   resExpress       Json
-  Connection       Connection @relation(fields: [connectionId], references: [id])
+}
+
+enum UserRole {
+  PENDING
+  DEFAULT
+  ADMIN
+  SUPERADMIN
 }
 
 enum DeviceStatus {
@@ -75,20 +82,13 @@ enum ThreatType {
   LOW
 }
 
-enum UserRole {
-  DEFAULT
-  ADMIN
-  SUPERADMIN
-  PENDING
+enum ConnectionType {
+  INNER
+  OUTER
 }
 
 enum ConnectionStatus {
   ACTIVE
   ARCHIVED
   FLAGGED
-}
-
-enum ConnectionType {
-  INNER
-  OUTER
 }

@@ -23,9 +23,13 @@ const index = () => {
   const router = useRouter();
 
   async function load() {
-    var users = await fetch("http://localhost:4000/user")
-      .then((res) => res.json())
-      .then((json) => setUsers(json));
+    try {
+      var users = await fetch("http://localhost:4000/user")
+        .then((res) => res.json())
+        .then((json) => setUsers(json));
+    } catch (error) {
+      console.error(`Error while loading all users ${error}`);
+    }
   }
 
   async function deleteUser(id: string) {
@@ -41,36 +45,38 @@ const index = () => {
     load();
   }, []);
   return (
-    <div className="h-screen w-screen bg-accent-strong">
-      <Header />
-      <div className="p-4 px-20">
-        <div className="h-20% w-full bg-accent-strong p-4">
-          <Link href="/admin-dashboard/user-managament/createUser">
-            <Button>Add User</Button>
-          </Link>
-        </div>
-        <div>
-          <div className="">
-            <Table
-              objects={users || []}
-              titles={{ password: "password", email: "email" }}
-              onClick={(user) => {
-                router.push("/user/" + user.id);
-              }}
-              actionRow={(user) => {
-                return (
-                  <>
-                    <Button
-                      onClick={() => {
-                        deleteUser(user.id);
-                      }}
-                    >
-                      <Icon icon="delete" className="bg-accent-strong" />
-                    </Button>
-                  </>
-                );
-              }}
-            ></Table>
+    <div className="h-screen">
+      <div className="h-full w-screen bg-accent-strong">
+        <Header />
+        <div className="p-4 px-20">
+          <div className="h-20% w-full bg-accent-strong p-4">
+            <Link href="/admin-dashboard/user-managament/createUser">
+              <Button>Add User</Button>
+            </Link>
+          </div>
+          <div>
+            <div className="">
+              <Table
+                objects={users || []}
+                titles={{ password: "password", email: "email" }}
+                onClick={(user) => {
+                  router.push("/user/" + user.id);
+                }}
+                actionRow={(user) => {
+                  return (
+                    <>
+                      <Button
+                        onClick={() => {
+                          deleteUser(user.id);
+                        }}
+                      >
+                        <Icon icon="delete" className="bg-accent-strong" />
+                      </Button>
+                    </>
+                  );
+                }}
+              ></Table>
+            </div>
           </div>
         </div>
       </div>

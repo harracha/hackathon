@@ -3,6 +3,7 @@ import { Button } from "~/components/button/Button";
 import Footer from "~/components/footer/Footer";
 import Header from "~/components/header/Header";
 import Icon from "~/components/Icon/Icon";
+import { useRouter } from "next/navigation";
 
 type userData = {
   username?: string;
@@ -18,18 +19,25 @@ const createUser = () => {
   });
 
   async function createUser(data: userData) {
-    const res = await fetch("http://localhost:4000/user/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: data?.username,
-        email: data?.email,
-        password: data?.password,
-      }),
-    });
+    try {
+      const res = await fetch("http://localhost:4000/user/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: data?.username,
+          email: data?.email,
+          password: data?.password,
+        }),
+      });
+      router.push("admin-dashboard/user-management");
+    } catch (error) {
+      console.error(`Error creating user ${error}`);
+    }
   }
+
+  const router = useRouter();
 
   return (
     <div>

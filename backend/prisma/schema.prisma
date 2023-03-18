@@ -9,14 +9,16 @@ datasource db {
 
 model User {
   id           String   @id @default(uuid())
+  username     String @unique
   info         Json?
-  email        String
+  email        String   @unique
   password     String
   userRole     UserRole
   avatar       String?
   googleUserId String?
   devices       Device[]
   userStatus UserStatus @default(PENDING)
+  keywords String[]
 }
 
 model Device {

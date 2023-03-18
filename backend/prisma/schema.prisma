@@ -28,6 +28,7 @@ model Device {
   userId String
   user User @relation(fields: [userId], references: [id])
   status DeviceStatus
+  connection Connection[]
 }
 
 model Threat {
@@ -35,16 +36,47 @@ model Threat {
   device Device @relation(fields: [deviceId], references: [id])
   deviceId String
   type ThreatType
+  info Json
+}
+
+model Connection {
+  id String @id @default(uuid())
+  device Device[]
+  connectionStatus ConnectionStatus
+  connectionType ConnectionType
+  req Req[]
+  res Res[]
+}
+
+model Req {
+    id String @id @default(uuid())
+    connection Connection @relation(fields: [connectionId], references: [id])
+    connectionId String
+    senderDeviceId String
+    receiverDeviceId String
+    reqExpress Json
+
+}
+
+model Res {
+    id String @id @default(uuid())
+    connection Connection @relation(fields: [connectionId], references: [id])
+    connectionId String
+    senderDeviceId String
+    receiverDeviceId String
+    resExpress Json
 }
 
 enum UserRole {
+  PENDING
   DEFAULT
   ADMIN
   SUPERADMIN
 }
 
 enum DeviceStatus {
-  ACTIVE
+  ONLINE
+  OFFLINE
   ARCHIVED
 }
 
@@ -52,4 +84,15 @@ enum ThreatType {
   HIGH
   MEDIUM
   LOW
+}
+
+enum ConnectionType {
+  INNER
+  OUTER
+}
+
+enum ConnectionStatus {
+  ACTIVE
+  ARCHIVED
+  FLAGGED
 }

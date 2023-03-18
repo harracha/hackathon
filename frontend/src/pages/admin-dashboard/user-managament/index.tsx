@@ -34,22 +34,24 @@ const index = () => {
     <div>
       <Header />
       <div className="h-screen w-screen bg-accent-strong">
-        <Table
-          objects={users || []}
-          titles={{ password: "password", email: "email" }}
-          onClick={(user) => {
-            router.push("/user/" + user.id);
-          }}
-          actionRow={(user) => {
-            return (
-              <>
-                <Button>
-                  <Icon icon="burgerMenu" className="bg-accent-strong" />
-                </Button>
-              </>
-            );
-          }}
-        ></Table>
+        <div className="p-4 px-20">
+          <Table
+            objects={users || []}
+            titles={{ password: "password", email: "email" }}
+            onClick={(user) => {
+              router.push("/user/" + user.id);
+            }}
+            actionRow={(user) => {
+              return (
+                <>
+                  <Button>
+                    <Icon icon="burgerMenu" className="bg-accent-strong" />
+                  </Button>
+                </>
+              );
+            }}
+          ></Table>
+        </div>
       </div>
     </div>
   );

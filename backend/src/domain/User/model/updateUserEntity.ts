@@ -1,4 +1,4 @@
-import { Device, UserRole } from "@prisma/client";
+import { Device, UserRole, UserStatus } from "@prisma/client";
 import { userInfo } from "./userInfo";
 
 export type updateUserEntity = {
@@ -10,4 +10,5 @@ export type updateUserEntity = {
   avatar?: string;
   googleUserId?: string;
   devices?: Device[];
+  userStatus?: UserStatus;
 };

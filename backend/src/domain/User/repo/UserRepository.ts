@@ -15,4 +15,20 @@ export abstract class UserRepository {
   async getUserInfo(id: string): Promise<Prisma.JsonValue | null> {
     throw new Error("Method not implemented.");
   }
+  async update(user: updateUserEntity): Promise<UserEntity> {
+    throw new Error("Method not implemented.");
+  }
+  async delete(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
+  async archive(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
+  async approve(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
+  async giveAdmin(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
+  
 }

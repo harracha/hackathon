@@ -20,10 +20,13 @@ router.get('/', authenticateToken, (req: Request, res: Response) => {
   res.json(users);
 });
 
+
+
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const user: User = { name: req.body.name, password: hashedPassword };
+    const data = req.body
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const user: User = { name: data.name, password: hashedPassword };
     users.push(user);
     res.status(201).send();
   } catch {

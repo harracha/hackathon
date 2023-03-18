@@ -1,5 +1,10 @@
-import { Prisma, PrismaClient, User, UserRole } from "@prisma/client";
-import { infoObject } from "../model/infoObject";
+import {
+  Prisma,
+  PrismaClient,
+  User,
+  UserRole,
+  UserStatus,
+} from "@prisma/client";
 import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
 import { UserRepository } from "./UserRepository";
@@ -42,9 +47,10 @@ export default class UserRepositoryPrisma extends UserRepository {
         email: user.email,
         info: info,
         password: user.password,
-        userRole: UserRole.DEFAULT, //PROMJENITI U PENDING
+        userRole: UserRole.DEFAULT,
         avatar: user.avatar,
         googleUserId: user.googleUserId,
+        userStatus: UserStatus.PENDING,
       },
     });
 
@@ -65,6 +71,87 @@ export default class UserRepositoryPrisma extends UserRepository {
       return null;
     } else {
       return response.info;
+    }
+  }
+  async update(data: updateUserEntity) {
+    let response = await prisma.user.update({
+      where: {
+        id: data.id
+      },
+      data: {
+        email: data.email,
+        info: data,
+        password: data.password,
+        userRole: data.userRole, //PROMJENITI U PENDING
+        avatar: data.avatar,
+        googleUserId: data.googleUserId,
+      }
+    })
+    let updated : UserEntity = response;
+    return updated
+  } 
+
+  async delete(id:string) {
+    let response = await prisma.user.delete({
+      where: { id: id}
+    })
+    if (response){
+      let deletedUser: UserEntity = response
+      return deletedUser
+    }
+    else {
+      return null;
+    }
+  }
+  async archive(id:string) {
+    let response = await prisma.user.update({
+      where: {
+        id: id
+      },
+      data: {
+        userStatus: UserStatus.ARCHIVED
+      }
+    })
+    if (response) {
+      let archivedUser: UserEntity = response
+      return archivedUser
+    }
+    else {
+      return null;
+    }
+  }
+  async approve(id:string) {
+    let response = await prisma.user.update({
+      where: {
+        id: id
+      },
+      data: {
+        userStatus: UserStatus.ACTIVE
+      }
+    })
+    if (response) {
+      let archivedUser: UserEntity = response
+      return archivedUser
+    }
+    else {
+      return null;
+    }
+  }
+  async giveAdmin(id:string) {
+    let response = await prisma.user.update({
+      where: {
+        id: id
+      },
+      data: {
+        userRole: UserRole.ADMIN
+      }
+    })
+    if (response) {
+      let archivedUser: UserEntity = response
+      return archivedUser
+    }
+    else {
+      return null;
     }
   }
 }

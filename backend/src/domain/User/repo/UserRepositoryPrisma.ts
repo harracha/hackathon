@@ -29,12 +29,15 @@ export default class UserRepositoryPrisma extends UserRepository {
 
   async getById(id: string) {
     let data = await prisma.user.findUnique({ where: { id: id } });
-    if (data) {
+    
+    if (data){
       let user: UserEntity = data;
       return user;
-    } else {
-      return null;
     }
+    else {
+      return null
+    }
+      
   }
 
   async create(user: UserEntity) {

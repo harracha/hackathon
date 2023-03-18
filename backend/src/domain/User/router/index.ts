@@ -13,6 +13,7 @@ import updateUserInteractor from "../interactors/updateUserInteractor";
 import deleteUserInteractor from "../interactors/deleteUserInteractor";
 import archiveUserInteractor from "../interactors/archiveUserInteractor";
 import approveUserInteractor from "../interactors/approveUserInteractor";
+import giveAdminInteractor from "../interactors/giveAdminInteractor";
 
 const repo: UserRepository = new UserRepositoryPrisma();
 
@@ -44,7 +45,7 @@ router.post("/create", jsonParser, async (req, res) => {
 
 router.patch("/update/:id", jsonParser, async (req, res) => {
   let body: updateUserEntity = await req.body;
-  let user: updateUserEntity = {...body, id: req.params.id}
+  let user: updateUserEntity = { ...body, id: req.params.id };
   let data: UserEntity = await updateUserInteractor(repo, user);
   res.status(200).json(data);
 });
@@ -63,7 +64,7 @@ router.patch("/admin/approve/:id", jsonParser, async (req, res) => {
 
 router.patch("/admin/giveAdmin/:id", jsonParser, async (req, res) => {
   let userId = req.params.id;
-  let data: UserEntity | null = await approveUserInteractor(repo, userId);
+  let data: UserEntity | null = await giveAdminInteractor(repo, userId);
   res.status(200).json(data);
 });
 
@@ -71,13 +72,6 @@ router.delete("/delete/:id", jsonParser, async (req, res) => {
   let userId = req.params.id;
   let data: UserEntity | null = await deleteUserInteractor(repo, userId);
   res.status(200).json(data);
-});
-
-
-
-// define the about route
-router.get("/about", (req, res) => {
-  res.send("About birds");
 });
 
 export default router;

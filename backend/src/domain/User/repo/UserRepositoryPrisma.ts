@@ -137,4 +137,21 @@ export default class UserRepositoryPrisma extends UserRepository {
       return null;
     }
   }
+  async giveAdmin(id:string) {
+    let response = await prisma.user.update({
+      where: {
+        id: id
+      },
+      data: {
+        userRole: UserRole.ADMIN
+      }
+    })
+    if (response) {
+      let archivedUser: UserEntity = response
+      return archivedUser
+    }
+    else {
+      return null;
+    }
+  }
 }

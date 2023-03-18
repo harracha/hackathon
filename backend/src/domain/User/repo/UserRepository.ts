@@ -27,4 +27,8 @@ export abstract class UserRepository {
   async approve(id: string): Promise<UserEntity | null> {
     throw new Error("Method not implemented.");
   }
+  async giveAdmin(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
+  
 }

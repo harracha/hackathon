@@ -61,9 +61,14 @@ const Landing = () => {
         data-aos="fade-top"
         className="flex h-[60%] w-screen justify-center p-10 px-40 pb-32"
       >
-        <Link href="/login">
-          <h1 className="display2 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
+        <Link className="text-center" href="/login">
+          <h1 className="display3 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
             Log in Here
+          </h1>
+        </Link>
+        <Link className="text-center" href="/register">
+          <h1 className="display3 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
+            Register Here
           </h1>
         </Link>
       </div>

@@ -38,6 +38,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/create", jsonParser, async (req, res) => {
+  
   let user: UserEntity = await req.body;
   let data: UserEntity = await createUserInteractor(repo, user);
   res.status(200).json(data);

@@ -50,10 +50,10 @@ const Landing = () => {
         </p>
         <Image
           data-aos="fade-left"
-          src="/brain.jpg"
-          className="m-5"
-          width={200}
-          height={200}
+          src="/brain.png"
+          className="m-5 "
+          width={300}
+          height={300}
           alt=""
         ></Image>
       </div>

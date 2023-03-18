@@ -1,5 +1,5 @@
 GET http://localhost:4000/auth
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt5bGUiLCJwYXNzd29yZCI6InBhc3N3b3JkIiwiaWF0IjoxNjc5MTU3NjUzLCJleHAiOjE2NzkxNTc2ODN9.LDBvhwxMzfXG7l_6ID1YXsL9hhENFKmvgou1_BQMvhM
 ###
 
 POST http://localhost:4000/auth

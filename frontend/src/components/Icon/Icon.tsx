@@ -22,6 +22,7 @@ const icons = {
   home: "/assets/icons/home.svg",
   lessons: "/assets/icons/lessons.svg",
   linked: "/assets/icons/linked.svg",
+  log: "/assets/icons/logo.svg",
   logOut: "/assets/icons/logOut.svg",
   notifications: "/assets/icons/notifications.svg",
   options: "/assets/icons/options.svg",

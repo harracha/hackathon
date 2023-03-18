@@ -12,7 +12,44 @@ datasource db {
 
 model User {
   id       String @id @default(uuid())
-  name     String
-  lastname String
-  email    String
+  info Json
+  email String
+  password String
+  userRole UserRole
+  avatar String?
+  googleUserId String?
+  device Device[]
+}
+
+model Device {
+  id String @id @default(uuid())
+  name String
+  quarantine Threat[]
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  status DeviceStatus
+}
+
+model Threat {
+  id String @id @default(uuid())
+  device Device @relation(fields: [deviceId], references: [id])
+  deviceId String
+  type ThreatType
+}
+
+enum UserRole {
+  DEFAULT
+  ADMIN
+  SUPERADMIN
+}
+
+enum DeviceStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum ThreatType {
+  HIGH
+  MEDIUM
+  LOW
 }

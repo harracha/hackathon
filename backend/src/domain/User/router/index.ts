@@ -14,15 +14,20 @@ import deleteUserInteractor from "../interactors/deleteUserInteractor";
 import archiveUserInteractor from "../interactors/archiveUserInteractor";
 import approveUserInteractor from "../interactors/approveUserInteractor";
 import giveAdminInteractor from "../interactors/giveAdminInteractor";
+import { PrismaClient } from "@prisma/client";
+import { userLogin } from "../model/userLogin";
+import dotenv from 'dotenv'
 
+const prisma = new PrismaClient();
 const repo: UserRepository = new UserRepositoryPrisma();
-
+const jwt = require('jsonwebtoken')
 // middleware that is specific to this router
 router.use((req, res, next) => {
   console.log("Time: ", Date.now());
   next();
 });
 var jsonParser = parser.json();
+dotenv.config()
 
 router.get("/", async (req, res) => {
   let data: UserEntity[] = await listUsersInteractor(repo);
@@ -72,6 +77,42 @@ router.delete("/delete/:id", jsonParser, async (req, res) => {
   let userId = req.params.id;
   let data: UserEntity | null = await deleteUserInteractor(repo, userId);
   res.status(200).json(data);
+});
+
+router.post('/login', async (req: Request, res: Response) => {
+  //const userHashed = users.find((user) => user.name === req.body.name);
+  // if (!userHashed) {
+  //   return res.status(400).send('Cannot find user');
+  // }
+  
+  try {
+    let body = await req.body;
+    let user : userLogin | null = await prisma.user.findUnique({
+      where: {
+        email: body.username
+      },
+      select: {
+        email: true, 
+        password: true,
+        userRole: true
+      }
+    })
+    let tokenizedUser = {
+      email: user?.email,
+      password: user?.password,
+      userRole: user?.userRole
+
+    }
+    //if (await bcrypt.compare(req.body.password, userHashed.password)) {
+      //const user = { username : req.body.name, password : req.body.password};
+      const accessToken = jwt.sign(tokenizedUser, process.env.ACCESS_TOKEN_SECRET, {expiresIn : '30m'});
+      res.json({ accessToken : accessToken});
+    /* } else {
+      res.send('Not Allowed');
+    } */
+  } catch {
+    res.status(500).send();
+  }
 });
 
 export default router;

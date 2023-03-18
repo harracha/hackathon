@@ -8,30 +8,14 @@ datasource db {
 }
 
 model User {
-<<<<<<< HEAD
   id           String   @id @default(uuid())
-  username     String @unique
-  info         Json?
-  email        String   @unique
-=======
-  id           String     @id @default(uuid())
-  info         Json?
-  email        String     @unique
->>>>>>> ee4ebfb00a9b62934a6ac19fc473d05235933a30
-  password     String
-  userRole     UserRole
+  email        String
   avatar       String?
   googleUserId String?
-<<<<<<< HEAD
-  devices       Device[]
-  userStatus UserStatus @default(PENDING)
-  keywords String[]
-=======
-  userStatus   UserStatus @default(PENDING)
-  keywords     String[]
-  username     String     @unique
+  info         Json
+  password     String
+  userRole     UserRole
   devices      Device[]
->>>>>>> ee4ebfb00a9b62934a6ac19fc473d05235933a30
 }
 
 model Device {
@@ -41,57 +25,23 @@ model Device {
   status     DeviceStatus
   user       User         @relation(fields: [userId], references: [id])
   quarantine Threat[]
-  connection Connection[] @relation("ConnectionToDevice")
 }
 
 model Threat {
   id       String     @id @default(uuid())
   deviceId String
   type     ThreatType
-  info     Json
   device   Device     @relation(fields: [deviceId], references: [id])
-}
-
-model Connection {
-  id               String           @id @default(uuid())
-  connectionStatus ConnectionStatus
-  req              Req[]
-  res              Res[]
-  device           Device[]         @relation("ConnectionToDevice")
-}
-
-model Req {
-  id               String     @id @default(uuid())
-  connectionId     String
-  senderDeviceId   String
-  receiverDeviceId String
-  reqExpress       Json
-  connection       Connection @relation(fields: [connectionId], references: [id])
-}
-
-model Res {
-  id               String     @id @default(uuid())
-  connectionId     String
-  senderDeviceId   String
-  receiverDeviceId String
-  resExpress       Json
-  connection       Connection @relation(fields: [connectionId], references: [id])
 }
 
 enum UserRole {
   DEFAULT
   ADMIN
-}
-
-enum UserStatus {
-  ACTIVE
-  ARCHIVED
-  PENDING
+  SUPERADMIN
 }
 
 enum DeviceStatus {
-  ONLINE
-  OFFLINE
+  ACTIVE
   ARCHIVED
 }
 
@@ -99,11 +49,4 @@ enum ThreatType {
   HIGH
   MEDIUM
   LOW
-}
-
-enum ConnectionStatus {
-  ACTIVE
-  ARCHIVED
-  FLAGGED
-  PENDING
 }

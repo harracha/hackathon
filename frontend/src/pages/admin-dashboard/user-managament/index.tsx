@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Button } from "~/components/button/Button";
@@ -31,26 +32,33 @@ const index = () => {
     load();
   }, []);
   return (
-    <div>
+    <div className="h-screen w-screen bg-accent-strong">
       <Header />
-      <div className="h-screen w-screen bg-accent-strong">
-        <div className="p-4 px-20">
-          <Table
-            objects={users || []}
-            titles={{ password: "password", email: "email" }}
-            onClick={(user) => {
-              router.push("/user/" + user.id);
-            }}
-            actionRow={(user) => {
-              return (
-                <>
-                  <Button>
-                    <Icon icon="burgerMenu" className="bg-accent-strong" />
-                  </Button>
-                </>
-              );
-            }}
-          ></Table>
+      <div className="p-4 px-20">
+        <div className="h-20% w-full bg-accent-strong p-4">
+          <Link href="/admin-dashboard/user-managament/createUser">
+            <Button>Add User</Button>
+          </Link>
+        </div>
+        <div>
+          <div className="">
+            <Table
+              objects={users || []}
+              titles={{ password: "password", email: "email" }}
+              onClick={(user) => {
+                router.push("/user/" + user.id);
+              }}
+              actionRow={(user) => {
+                return (
+                  <>
+                    <Button>
+                      <Icon icon="burgerMenu" className="bg-accent-strong" />
+                    </Button>
+                  </>
+                );
+              }}
+            ></Table>
+          </div>
         </div>
       </div>
     </div>

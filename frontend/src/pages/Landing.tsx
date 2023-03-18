@@ -16,7 +16,7 @@ const Landing = () => {
       >
         <div>
           <h1 className="display2 grad mb-2  flex items-center justify-center text-info ">
-            Brainett
+            Brainet
           </h1>
           <p className="title2 mb-8 flex justify-center text-info ">
             Take a look at all the threats you may recieve online

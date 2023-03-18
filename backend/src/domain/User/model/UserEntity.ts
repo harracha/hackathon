@@ -14,3 +14,5 @@ export type UserEntity = {
   userStatus: UserStatus;
   keywords: string[];
 };
+
+

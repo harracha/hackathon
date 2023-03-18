@@ -8,66 +8,65 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id           String     @id @default(uuid())
   info         Json?
   email        String
   password     String
   userRole     UserRole
   avatar       String?
   googleUserId String?
-  devices       Device[]
+  userStatus   UserStatus @default(PENDING)
+  keywords     String[]
+  devices      Device[]
 }
 
 model Device {
   id         String       @id @default(uuid())
   name       String
-  quarantine Threat[]
   userId     String
-  user       User         @relation(fields: [userId], references: [id])
   status     DeviceStatus
-  connection Connection[]
+  user       User         @relation(fields: [userId], references: [id])
+  quarantine Threat[]
+  connection Connection[] @relation("ConnectionToDevice")
 }
 
 model Threat {
   id       String     @id @default(uuid())
-  device   Device     @relation(fields: [deviceId], references: [id])
   deviceId String
   type     ThreatType
   info     Json
+  device   Device     @relation(fields: [deviceId], references: [id])
 }
 
 model Connection {
   id               String           @id @default(uuid())
-  device           Device[]
   connectionStatus ConnectionStatus
-  connectionType   ConnectionType
   req              Req[]
   res              Res[]
+  device           Device[]         @relation("ConnectionToDevice")
 }
 
 model Req {
   id               String     @id @default(uuid())
-  connection       Connection @relation(fields: [connectionId], references: [id])
   connectionId     String
   senderDeviceId   String
   receiverDeviceId String
   reqExpress       Json
+  connection       Connection @relation(fields: [connectionId], references: [id])
 }
 
 model Res {
   id               String     @id @default(uuid())
-  connection       Connection @relation(fields: [connectionId], references: [id])
   connectionId     String
   senderDeviceId   String
   receiverDeviceId String
   resExpress       Json
+  connection       Connection @relation(fields: [connectionId], references: [id])
 }
 
 enum UserRole {
-  PENDING
   DEFAULT
   ADMIN
-  SUPERADMIN
 }
 
 enum DeviceStatus {
@@ -82,13 +81,15 @@ enum ThreatType {
   LOW
 }
 
-enum ConnectionType {
-  INNER
-  OUTER
-}
-
 enum ConnectionStatus {
   ACTIVE
   ARCHIVED
   FLAGGED
+  PENDING
+}
+
+enum UserStatus {
+  ACTIVE
+  ARCHIVED
+  PENDING
 }

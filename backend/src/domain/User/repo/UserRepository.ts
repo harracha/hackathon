@@ -18,4 +18,10 @@ export abstract class UserRepository {
   async update(user: updateUserEntity): Promise<UserEntity> {
     throw new Error("Method not implemented.");
   }
+  async delete(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
+  async archive(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
 }

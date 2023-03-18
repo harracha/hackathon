@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, User, UserRole } from "@prisma/client";
+import { Prisma, PrismaClient, User, UserRole, UserStatus } from "@prisma/client";
 import { infoObject } from "../model/infoObject";
 import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
@@ -84,4 +84,34 @@ export default class UserRepositoryPrisma extends UserRepository {
     let updated : UserEntity = response;
     return updated
   } 
+
+  async delete(id:string) {
+    let response = await prisma.user.delete({
+      where: { id: id}
+    })
+    if (response){
+      let deletedUser: UserEntity = response
+      return deletedUser
+    }
+    else {
+      return null;
+    }
+  }
+  async archive(id:string) {
+    let response = await prisma.user.update({
+      where: {
+        id: id
+      },
+      data: {
+        userStatus: UserStatus.ARCHIVED
+      }
+    })
+    if (response) {
+      let archivedUser: UserEntity = response
+      return archivedUser
+    }
+    else {
+      return null;
+    }
+  }
 }

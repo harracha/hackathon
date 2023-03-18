@@ -12,6 +12,7 @@ import { updateUserEntity } from "../model/updateUserEntity";
 import updateUserInteractor from "../interactors/updateUserInteractor";
 import deleteUserInteractor from "../interactors/deleteUserInteractor";
 import archiveUserInteractor from "../interactors/archiveUserInteractor";
+import approveUserInteractor from "../interactors/approveUserInteractor";
 
 const repo: UserRepository = new UserRepositoryPrisma();
 
@@ -51,6 +52,18 @@ router.patch("/update/:id", jsonParser, async (req, res) => {
 router.patch("/archive/:id", jsonParser, async (req, res) => {
   let userId = req.params.id;
   let data: UserEntity | null = await archiveUserInteractor(repo, userId);
+  res.status(200).json(data);
+});
+
+router.patch("/admin/approve/:id", jsonParser, async (req, res) => {
+  let userId = req.params.id;
+  let data: UserEntity | null = await approveUserInteractor(repo, userId);
+  res.status(200).json(data);
+});
+
+router.patch("/admin/giveAdmin/:id", jsonParser, async (req, res) => {
+  let userId = req.params.id;
+  let data: UserEntity | null = await approveUserInteractor(repo, userId);
   res.status(200).json(data);
 });
 

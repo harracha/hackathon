@@ -12,29 +12,29 @@ const Header = () => {
             className="hover:fill-text-accent-weak cursor-pointer fill-info
             text-info hover:text-accent-weak"
           >
-            {/* <Image
+            <Image
               priority
               src="/brainet_logo.png"
               alt="Brainet logo"
               width={80}
               height={80}
-              className="cursor-pointer items-center justify-center bg-transparent"
-            /> */}
+              className="cursor-pointer items-center justify-center bg-transparent  fill-info text-info hover:fill-accent-weak hover:text-accent-weak"
+            />
 
-            <Image
+            {/* <Image
               width={80}
               height={80}
               src="/brainet_logo.svg"
               alt="Brainet logo"
               className="cursor-pointer items-center justify-center bg-transparent fill-info text-info hover:fill-accent-weak hover:text-accent-weak"
-            />
+            /> */}
           </Link>
         </div>
         <div className="flex w-full items-center justify-end pl-4">
           <ul className="w-ful flex items-center justify-between">
             <li className="flex items-center justify-center px-3">
               <Link
-                href="/#"
+                href="/"
                 className="title2 cursor-pointer text-info hover:text-accent-weak"
               >
                 Home
@@ -42,7 +42,7 @@ const Header = () => {
             </li>
             <li className="flex items-center justify-center px-3">
               <Link
-                href="/#"
+                href="/developers"
                 className="title2 cursor-pointer text-info hover:text-accent-weak"
               >
                 About Us

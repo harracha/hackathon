@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@svgr/webpack": "^6.5.1",
     "aos": "^3.0.0-beta.6",
     "next": "^13.2.1",
     "react": "18.2.0",

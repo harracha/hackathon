@@ -8,7 +8,7 @@ const Footer = () => {
       <div className=" flex h-full w-full items-center justify-between">
         <div>
           <div>
-            <h1 className="title1 dfsafddfadfas text-info">Brainet</h1>
+            <h1 className="title1 text-xl text-info">Brainet</h1>
           </div>
         </div>
         <div className=" flex h-3/4 items-center justify-between">

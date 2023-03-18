@@ -7,12 +7,10 @@ export abstract class ReqRepository {
   async getAll(): Promise<(ReqEntity & { res: ResEntity | null })[]> {
     throw new Error("Method not implemented.");
   }
-  async getFlagged(): Promise<(ReqEntity & { res: ResEntity | null })[]> {
+  async getFlagged(): Promise<ReqEntity[]> {
     throw new Error("Method not implemented.");
   }
-  async getFlaggedByDeviceId(
-    deviceId: string
-  ): Promise<(ReqEntity & { res: ResEntity | null })[]> {
+  async getFlaggedByDeviceId(deviceId: string): Promise<ReqEntity[]> {
     throw new Error("Method not implemented.");
   }
   async getAllByConnectionId(

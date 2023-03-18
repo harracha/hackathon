@@ -174,9 +174,8 @@ router.get("/verCode/:userId/:verCode", async (req, res) => {
   } else res.status(403);
 });
 
-router.get("/flagged", async (req, res) => {
-  let data: (ReqEntity & { res: ResEntity | null })[] =
-    await listAllFlaggedInteractor(reqRepo);
+router.get("/admin/flagged", async (req, res) => {
+  let data: ReqEntity[] = await listAllFlaggedInteractor(reqRepo);
   res.status(200).json(data);
 });
 

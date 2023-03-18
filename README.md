@@ -2,6 +2,12 @@
 
 > This repo contains our solution for the FrontEd hackathon hosted at Span
 
+---
+
+## Team name:
+
+_CSS-ovci_
+
 ## Team members
 
 - Adrian Aničić

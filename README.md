@@ -33,3 +33,33 @@ _CSS-ovci_
 - PrismaORM
 - PostgreSQL
 - PostmanAPI
+
+## How to run our app?
+
+1. Git clone this repo using preferred method
+2. Change directories so that backend directory is the root folder
+3. Enter these commands:
+
+```
+npx prisma generate
+npm run dev
+```
+
+4. Change directories so that the frontend directory is the root folder
+5. Enter these commands:
+
+- if you are using yarn
+
+```
+yarn install
+yarn dev
+```
+
+- if you are using npm
+
+```
+npm install
+npm run dev
+```
+
+6. You are now done. Click on this link to open our app - [Brainet](http://localhost:3000/)

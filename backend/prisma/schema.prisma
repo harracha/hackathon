@@ -9,13 +9,13 @@ datasource db {
 
 model User {
   id           String   @id @default(uuid())
-  info         Json
+  info         Json?
   email        String
   password     String
   userRole     UserRole
   avatar       String?
   googleUserId String?
-  device       Device[]
+  devices       Device[]
 }
 
 model Device {

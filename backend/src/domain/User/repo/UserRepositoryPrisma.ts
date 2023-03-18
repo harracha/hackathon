@@ -1,4 +1,5 @@
-import { PrismaClient, User, UserRole } from "@prisma/client";
+import { Prisma, PrismaClient, User, UserRole } from "@prisma/client";
+import { infoObject } from "../model/infoObject";
 import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
 import { UserRepository } from "./UserRepository";
@@ -12,7 +13,7 @@ export default class UserRepositoryPrisma extends UserRepository {
 
     // map to UserEntities
     let users: UserEntity[] = [];
-    datas.forEach((data: UserEntity) => {
+    datas.forEach((data: User) => {
       let user: UserEntity = data;
       users.push(user);
     });
@@ -31,39 +32,39 @@ export default class UserRepositoryPrisma extends UserRepository {
   }
 
   async create(user: UserEntity) {
-     let response = await prisma.user.create({
+    let info:
+      | undefined
+      | Prisma.NullableJsonNullValueInput
+      | Prisma.InputJsonValue = user.info ? user.info : undefined;
+    let response = await prisma.user.create({
       data: {
         id: user.id,
         email: user.email,
-        info: user.info,
+        info: info,
         password: user.password,
-        userRole: UserRole.DEFAULT, //PROMJENITI U PENDING 
+        userRole: UserRole.DEFAULT, //PROMJENITI U PENDING
         avatar: user.avatar,
         googleUserId: user.googleUserId,
-        Device: undefined
       },
     });
 
-    let out: UserEntity  = response;
-    return out; 
+    let out: UserEntity = response;
+    return out;
   }
-  async getUserInfo(id: String) {
+  async getUserInfo(id: string) {
     let response = await prisma.user.findUnique({
       where: {
-        id: id
+        id: id,
       },
       select: {
-        info: true
-      }
+        info: true,
+      },
     });
 
     if (response === null) {
-      return null
+      return null;
+    } else {
+      return response.info;
     }
-    else {
-      return response.info
-    }
-
-    
   }
 }

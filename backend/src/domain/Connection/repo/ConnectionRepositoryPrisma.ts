@@ -7,6 +7,9 @@ import {
 import { updateConnectionEntity } from "../model/updateConnectionEntity";
 import { ConnectionEntity } from "../model/ConnectionEntity";
 import { ConnectionRepository } from "./ConnectionRepository";
+import { ReqEntity } from "../../Req/model/ReqEntity";
+import { ResEntity } from "../../Res/model/ResEntity";
+import { DeviceEntity } from "../../Device/model/deviceModel";
 
 const prisma = new PrismaClient();
 

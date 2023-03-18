@@ -1,19 +1,24 @@
-import { Prisma, PrismaClient, Req, ReqStatus } from "@prisma/client";
+import { Prisma, PrismaClient, Req, Res } from "@prisma/client";
 import { updateReqEntity } from "../model/updateReqEntity";
 import { ReqEntity } from "../model/ReqEntity";
 import { ReqRepository } from "./ReqRepository";
+import { ResEntity } from "../../Res/model/ResEntity";
 
 const prisma = new PrismaClient();
 
 export default class ReqRepositoryPrisma extends ReqRepository {
   async getAll() {
     // prisma Reqs
-    let datas = await prisma.req.findMany();
+    let datas = await prisma.req.findMany({
+      include: {
+        res: true,
+      },
+    });
 
     // map to ReqEntities
-    let reqs: ReqEntity[] = [];
-    datas.forEach((data: Req) => {
-      let req: ReqEntity = data;
+    let reqs: (ReqEntity & { res: ResEntity | null })[] = [];
+    datas.forEach((data) => {
+      let req: ReqEntity & { res: ResEntity | null } = data;
       reqs.push(req);
     });
 
@@ -26,30 +31,16 @@ export default class ReqRepositoryPrisma extends ReqRepository {
       where: {
         isThreat: true,
       },
-    });
 
-    // map to ReqEntities
-    let reqs: ReqEntity[] = [];
-    datas.forEach((data: Req) => {
-      let req: ReqEntity = data;
-      reqs.push(req);
-    });
-
-    return reqs;
-  }
-
-  async getAllByDeviceId(deviceId: string) {
-    // prisma Reqs
-    let datas = await prisma.req.findMany({
-      where: {
-        deviceId: deviceId,
+      include: {
+        res: true,
       },
     });
 
     // map to ReqEntities
-    let reqs: ReqEntity[] = [];
-    datas.forEach((data: Req) => {
-      let req: ReqEntity = data;
+    let reqs: (ReqEntity & { res: ResEntity | null })[] = [];
+    datas.forEach((data) => {
+      let req: ReqEntity & { res: ResEntity | null } = data;
       reqs.push(req);
     });
 
@@ -63,31 +54,36 @@ export default class ReqRepositoryPrisma extends ReqRepository {
         deviceId: deviceId,
         isThreat: true,
       },
+      include: {
+        res: true,
+      },
     });
 
     // map to ReqEntities
-    let reqs: ReqEntity[] = [];
-    datas.forEach((data: Req) => {
-      let req: ReqEntity = data;
+    let reqs: (ReqEntity & { res: ResEntity | null })[] = [];
+    datas.forEach((data) => {
+      let req: ReqEntity & { res: ResEntity | null } = data;
       reqs.push(req);
     });
 
     return reqs;
   }
 
-  async getFlaggedByConnectionId(connectionId: string) {
+  async getAllByConnectionId(connectionId: string) {
     // prisma Reqs
     let datas = await prisma.req.findMany({
       where: {
         connectionId: connectionId,
-        isThreat: true,
+      },
+      include: {
+        res: true,
       },
     });
 
     // map to ReqEntities
-    let reqs: ReqEntity[] = [];
-    datas.forEach((data: Req) => {
-      let req: ReqEntity = data;
+    let reqs: (ReqEntity & { res: ResEntity | null })[] = [];
+    datas.forEach((data) => {
+      let req: ReqEntity & { res: ResEntity | null } = data;
       reqs.push(req);
     });
 
@@ -169,6 +165,23 @@ export default class ReqRepositoryPrisma extends ReqRepository {
     if (response) {
       let archivedReq: ReqEntity = response;
       return archivedReq;
+    } else {
+      return null;
+    }
+  }
+
+  async respond(id: string, res: ResEntity) {
+    let response = await prisma.res.create({
+      data: {
+        connectionId: res.connectionId,
+        code: res.code,
+        reqId: id,
+      },
+    });
+
+    if (response) {
+      let res: ResEntity = response;
+      return res;
     } else {
       return null;
     }

@@ -12,8 +12,15 @@ import { updateConnectionEntity } from "../model/updateConnectionEntity";
 import updateConnectionInteractor from "../interactors/updateConnectionInteractor";
 import deleteConnectionInteractor from "../interactors/deleteConnectionInteractor";
 import archiveConnectionInteractor from "../interactors/archiveConnectionInteractor";
+import { ReqEntity } from "../../Req/model/ReqEntity";
+import { ResEntity } from "../../Res/model/ResEntity";
+import listReqsInConnectionInteractor from "../interactors/listReqsInConnectionInteractor";
+import ReqRepositoryPrisma from "../../Req/repo/ReqRepositoryPrisma";
+import { ReqRepository } from "../../Req/repo/ReqRepository";
+import respondToReqInteractor from "../interactors/respondToReqInteractor";
 
 const repo: ConnectionRepository = new ConnectionRepositoryPrisma();
+const reqRepo: ReqRepository = new ReqRepositoryPrisma();
 
 // middleware that is specific to this router
 router.use((req, res, next) => {
@@ -31,6 +38,22 @@ router.get("/:id", async (req, res) => {
   let data: ConnectionEntity | null = await getConnectionByIdInteractor(
     repo,
     req.params.id
+  );
+  res.status(200).json(data);
+});
+
+router.get("/reqs/:id", async (req, res) => {
+  let data: (ReqEntity & { res: ResEntity | null })[] | null =
+    await listReqsInConnectionInteractor(reqRepo, req.params.id);
+  res.status(200).json(data);
+});
+
+router.get("/reqs/respond/:id", async (req, res) => {
+  let response: ResEntity = req.body;
+  let data: ResEntity | null = await respondToReqInteractor(
+    reqRepo,
+    req.params.id,
+    response
   );
   res.status(200).json(data);
 });

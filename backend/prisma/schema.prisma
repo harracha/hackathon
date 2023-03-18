@@ -20,7 +20,6 @@ model User {
   username     String
   verCode      String?
   devices      Device[]
-  verCode      String?
 }
 
 model Device {

@@ -31,16 +31,12 @@ export default class ReqRepositoryPrisma extends ReqRepository {
       where: {
         isThreat: true,
       },
-
-      include: {
-        res: true,
-      },
     });
 
     // map to ReqEntities
-    let reqs: (ReqEntity & { res: ResEntity | null })[] = [];
-    datas.forEach((data) => {
-      let req: ReqEntity & { res: ResEntity | null } = data;
+    let reqs: ReqEntity[] = [];
+    datas.forEach((data: ReqEntity) => {
+      let req: ReqEntity = data;
       reqs.push(req);
     });
 
@@ -54,15 +50,12 @@ export default class ReqRepositoryPrisma extends ReqRepository {
         deviceId: deviceId,
         isThreat: true,
       },
-      include: {
-        res: true,
-      },
     });
 
     // map to ReqEntities
-    let reqs: (ReqEntity & { res: ResEntity | null })[] = [];
-    datas.forEach((data) => {
-      let req: ReqEntity & { res: ResEntity | null } = data;
+    let reqs: ReqEntity[] = [];
+    datas.forEach((data: ReqEntity) => {
+      let req: ReqEntity = data;
       reqs.push(req);
     });
 

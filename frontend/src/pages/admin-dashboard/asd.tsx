@@ -7,6 +7,8 @@ import Header from "~/components/header/Header";
 import { Stack } from "../page/Stack";
 import { Section } from "../page/Section";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { exit } from "process";
 
 type user = {
   id: string;
@@ -19,7 +21,7 @@ type user = {
   userStatus: string;
 };
 
-const index = () => {
+const asd = () => {
   const [asd, setAsd] = useState();
   const [s, setS] = useState<user>();
   const [users, setUsers] = useState<user[]>();
@@ -46,18 +48,27 @@ const index = () => {
   return (
     <>
       <Header />
-      <div className="flex h-screen w-screen flex-col justify-center bg-black p-2">
-        <div className="flex  h-full w-full flex-col justify-start gap-2 p-2">
-          <div className="p  h-[10%] w-[100%] rounded-xl bg-accent-strong p-3 ">
-            <h1 className="title1 text-info">Welcome back, {s?.email}!</h1>
-          </div>
-          <div className="flex gap-2">
-            <Section>
-              <Table
+      <motion.div
+        initial={{ left: -50 }}
+        animate={{ left: 0 }}
+        exit={{ left: 50 }}
+      >
+        <div className="flex h-screen w-screen flex-col justify-center bg-black p-2">
+          <div className="flex  h-full w-full flex-col justify-start gap-2 p-2">
+            <div className="p  h-[10%] w-[100%] rounded-xl bg-accent-strong p-3 ">
+              <h1 className="title1 text-info">Welcome back, {s?.email}!</h1>
+            </div>
+            <div className="flex gap-2">
+              <Section>
+                <div className="grid grid-cols-2 p-2">
+                  <div className="rounded"></div>
+                </div>
+
+                {/* <Table
                 objects={users || []}
                 titles={{ password: "password", email: "email" }}
                 onClick={(user) => {
-                  router.push("localhost:3000/user/" + user.id);
+                  router.push("/user/" + user.id);
                 }}
                 actionRow={(user) => {
                   return (
@@ -68,13 +79,17 @@ const index = () => {
                     </>
                   );
                 }}
-              ></Table>
-            </Section>
+              ></Table> */}
+              </Section>
+              <div data-aos="zoom-in" className="rounded-xl">
+                asdf
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };
 
-export default index;
+export default asd;

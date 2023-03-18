@@ -1,13 +1,14 @@
 import { Device, UserRole } from "@prisma/client";
+import { infoObject } from "./infoObject";
 import { userInfo } from "./userInfo";
 
 export type UserEntity = {
   id: string;
   email: string;
-  info: userInfo;
+  info: infoObject;
   password: string;
   userRole: UserRole;
-  avatar?: string;
-  googleUserId?: string;
-  devices: Device[]
+  avatar?: string | null;
+  googleUserId?: string | null;
+  devices?: Device[];
 };

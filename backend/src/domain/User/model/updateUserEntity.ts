@@ -9,6 +9,5 @@ export type updateUserEntity = {
   userRole?: UserRole;
   avatar?: string;
   googleUserId?: string;
-  devices?: Device[]
+  devices?: Device[];
 };
-

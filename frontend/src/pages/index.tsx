@@ -45,19 +45,20 @@ const Home: NextPage = () => {
             </p>
           </div>
         </div>
-        <div
-          data-aos="fade-left"
-          data-aos-anchor="#example-anchor"
-          data-aos-offset="500"
-          data-aos-duration="500"
-          className="flex h-[60%] w-screen justify-center p-10 px-40"
-        >
-          <Link href="/login">
-            <h1 className="display2 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
-              Log in Here
-            </h1>
-          </Link>
+        <div className="flex h-[60%] w-screen justify-between  p-10 px-40">
+          <p
+            data-aos="fade-right"
+            className="caption grad flex  items-center justify-center text-white "
+          >
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged.
+          </p>
           <Image
+            data-aos="fade-left"
             src="/brain.jpg"
             className="m-5"
             width={200}
@@ -66,12 +67,17 @@ const Home: NextPage = () => {
           ></Image>
         </div>
         <div
-          data-aos="zoom-in-right"
-          className="flex h-[60%] w-screen justify-between  p-10 px-40"
+          data-aos="fade-top"
+          className="flex h-[60%] w-screen justify-center p-10 px-40 pb-32"
         >
-          <h1 className="title1 grad flex w-[50%] items-center justify-center text-info ">
-            NetworkBrain
-          </h1>
+          <Link href="/login">
+            <h1 className="display2 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
+              Log in Here
+            </h1>
+          </Link>
+        </div>
+        <div>
+          <h1 className="hidden">asdfasdfasdf</h1>
         </div>
       </div>
     </>

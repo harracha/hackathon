@@ -48,7 +48,7 @@ router.get("/reqs/:id", async (req, res) => {
   res.status(200).json(data);
 });
 
-router.get("/reqs/respond/:id", async (req, res) => {
+router.post("/reqs/respond/:id", async (req, res) => {
   let response: ResEntity = req.body;
   let data: ResEntity | null = await respondToReqInteractor(
     reqRepo,

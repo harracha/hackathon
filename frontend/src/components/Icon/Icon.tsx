@@ -19,6 +19,7 @@ const icons = {
   forward: "/assets/icons/forward.svg",
   gridView: "/assets/icons/gridView.svg",
   listView: "/assets/icons/listView.svg",
+  logo: "/assets/icons/logo.svg",
   home: "/assets/icons/home.svg",
   lessons: "/assets/icons/lessons.svg",
   linked: "/assets/icons/linked.svg",

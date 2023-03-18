@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv'; 
 const jwt = require('jsonwebtoken');
+import nodemailer from 'nodemailer';
 
 dotenv.config();
 
@@ -22,12 +23,36 @@ router.get('/', authenticateToken, (req: Request, res: Response) => {
 
 
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/signin', async (req: Request, res: Response) => {
   try {
     const data = req.body
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const user: User = { name: data.name, password: hashedPassword };
     users.push(user);
+    const html = `<h1>HŽV</h1>
+      <p>za verifikaciju stisni na link</p>
+      <a href="https://www.youtube.com/watch?v=cLGMWX-DSzY">dobar dan na hackathon</a>
+    `
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.office365.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: 'brainet_user_link@outlook.com',
+        pass: 'Brainetlozinka'
+      }
+    });
+
+    const mailOptions = {
+      from: 'brainet_user_link@outlook.com',
+      to: user.name,
+      subject: 'test mail',
+      html: html,
+    };
+
+    await transporter.sendMail(mailOptions);
+
     res.status(201).send();
   } catch {
     res.status(500).send();

@@ -2,8 +2,28 @@
 
 > This repo contains our solution for the FrontEd hackathon hosted at Span
 
----
+## Team members
 
-Tech stack we used:
+- Adrian Aničić
+- Dominik Kanjuh
+- Filip Bürgler
+- Franko Budimir
+- Hary Samardžić
 
-## Frontend
+## Tech stack we used:
+
+### Frontend
+
+- ReactJS
+- NextJS
+- TypeScript
+- TailwindCSS
+
+### Backend
+
+- NodeJS
+- ExpressJS
+- TypeScript
+- PrismaORM
+- PostgreSQL
+- PostmanAPI

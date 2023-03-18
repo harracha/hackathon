@@ -120,4 +120,21 @@ export default class UserRepositoryPrisma extends UserRepository {
       return null;
     }
   }
+  async approve(id:string) {
+    let response = await prisma.user.update({
+      where: {
+        id: id
+      },
+      data: {
+        userStatus: UserStatus.ACTIVE
+      }
+    })
+    if (response) {
+      let archivedUser: UserEntity = response
+      return archivedUser
+    }
+    else {
+      return null;
+    }
+  }
 }

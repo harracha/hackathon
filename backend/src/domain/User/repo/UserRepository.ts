@@ -24,4 +24,7 @@ export abstract class UserRepository {
   async archive(id: string): Promise<UserEntity | null> {
     throw new Error("Method not implemented.");
   }
+  async approve(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
 }

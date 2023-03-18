@@ -49,9 +49,9 @@ const index = () => {
     <div className="overflow-hidden">
       <Header />
       <div>
-        <div className="flex h-screen w-screen flex-col justify-center  bg-black p-2">
+        <div className="flex h-screen w-screen flex-col justify-center  bg-accent-strong p-2">
           <div className="flex  h-full w-full flex-col justify-start gap-2 p-2">
-            <div className="p  h-[10%] w-[100%] rounded-xl bg-accent-strong p-3 ">
+            <div className="p  h-[10%] w-[100%] rounded-xl bg-accent p-3 ">
               <h1 className="title1 text-info">Welcome back, {s?.email}!</h1>
             </div>
             {/* <Section>
@@ -74,7 +74,7 @@ const index = () => {
             </Section> */}
             <div className="grid h-full w-full grid-cols-1 gap-2 sm:grid-cols-2">
               <Link
-                className="flex h-full items-center justify-center rounded-xl bg-accent-strong text-center text-info shadow-xl hover:bg-accent-medium"
+                className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
                 href="/admin-dashboard/user-managament"
               >
                 <div>
@@ -85,7 +85,7 @@ const index = () => {
                 </div>
               </Link>
               <Link
-                className="flex h-full items-center justify-center rounded-xl bg-accent-strong text-center text-info shadow-xl hover:bg-accent-medium"
+                className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
                 href="/admin-dashboard/quarantine"
               >
                 <div>
@@ -96,7 +96,7 @@ const index = () => {
                 </div>
               </Link>
               <Link
-                className="flex h-full items-center justify-center rounded-xl bg-accent-strong text-center text-info shadow-xl hover:bg-accent-medium"
+                className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
                 href="/admin-dashboard/connections"
               >
                 <div>
@@ -107,7 +107,7 @@ const index = () => {
                 </div>
               </Link>
               <Link
-                className="flex h-full items-center justify-center rounded-xl bg-accent-strong text-center text-info shadow-xl hover:bg-accent-medium"
+                className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
                 href="/admin-dashboard/analytics"
               >
                 <div>

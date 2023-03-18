@@ -38,6 +38,62 @@ export default class ReqRepositoryPrisma extends ReqRepository {
     return reqs;
   }
 
+  async getAllByDeviceId(deviceId: string) {
+    // prisma Reqs
+    let datas = await prisma.req.findMany({
+      where: {
+        deviceId: deviceId,
+      },
+    });
+
+    // map to ReqEntities
+    let reqs: ReqEntity[] = [];
+    datas.forEach((data: Req) => {
+      let req: ReqEntity = data;
+      reqs.push(req);
+    });
+
+    return reqs;
+  }
+
+  async getFlaggedByDeviceId(deviceId: string) {
+    // prisma Reqs
+    let datas = await prisma.req.findMany({
+      where: {
+        deviceId: deviceId,
+        isThreat: true,
+      },
+    });
+
+    // map to ReqEntities
+    let reqs: ReqEntity[] = [];
+    datas.forEach((data: Req) => {
+      let req: ReqEntity = data;
+      reqs.push(req);
+    });
+
+    return reqs;
+  }
+
+  async getFlaggedByConnectionId(connectionId: string) {
+    // prisma Reqs
+    let datas = await prisma.req.findMany({
+      where: {
+        connectionId: connectionId,
+        isThreat: true,
+      },
+    });
+
+    // map to ReqEntities
+    let reqs: ReqEntity[] = [];
+    datas.forEach((data: Req) => {
+      let req: ReqEntity = data;
+      reqs.push(req);
+    });
+
+    return reqs;
+  }
+
   async getById(id: string) {
     let data = await prisma.req.findUnique({
       where: { id: id },

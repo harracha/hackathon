@@ -8,6 +8,7 @@ import {
 import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
 import { UserRepository } from "./UserRepository";
+import keywords from "../../../../../keywords.json";
 
 const prisma = new PrismaClient();
 
@@ -41,9 +42,11 @@ export default class UserRepositoryPrisma extends UserRepository {
       | undefined
       | Prisma.NullableJsonNullValueInput
       | Prisma.InputJsonValue = user.info ? user.info : undefined;
+    let keyw: string[] = keywords.keywords;
     let response = await prisma.user.create({
       data: {
         id: user.id,
+        username: user.username,
         email: user.email,
         info: info,
         password: user.password,
@@ -51,6 +54,7 @@ export default class UserRepositoryPrisma extends UserRepository {
         avatar: user.avatar,
         googleUserId: user.googleUserId,
         userStatus: UserStatus.PENDING,
+        keywords: keyw,
       },
     });
 
@@ -76,81 +80,80 @@ export default class UserRepositoryPrisma extends UserRepository {
   async update(data: updateUserEntity) {
     let response = await prisma.user.update({
       where: {
-        id: data.id
+        id: data.id,
       },
       data: {
         email: data.email,
+        username: data.username,
         info: data,
         password: data.password,
         userRole: data.userRole, //PROMJENITI U PENDING
         avatar: data.avatar,
         googleUserId: data.googleUserId,
-      }
-    })
-    let updated : UserEntity = response;
-    return updated
-  } 
+        keywords: data.keywords,
+        userStatus: data.userStatus,
+      },
+    });
+    let updated: UserEntity = response;
+    return updated;
+  }
 
-  async delete(id:string) {
+  async delete(id: string) {
     let response = await prisma.user.delete({
-      where: { id: id}
-    })
-    if (response){
-      let deletedUser: UserEntity = response
-      return deletedUser
-    }
-    else {
+      where: { id: id },
+    });
+    if (response) {
+      let deletedUser: UserEntity = response;
+      return deletedUser;
+    } else {
       return null;
     }
   }
-  async archive(id:string) {
+  async archive(id: string) {
     let response = await prisma.user.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
-        userStatus: UserStatus.ARCHIVED
-      }
-    })
+        userStatus: UserStatus.ARCHIVED,
+      },
+    });
     if (response) {
-      let archivedUser: UserEntity = response
-      return archivedUser
-    }
-    else {
+      let archivedUser: UserEntity = response;
+      return archivedUser;
+    } else {
       return null;
     }
   }
-  async approve(id:string) {
+  async approve(id: string) {
     let response = await prisma.user.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
-        userStatus: UserStatus.ACTIVE
-      }
-    })
+        userStatus: UserStatus.ACTIVE,
+      },
+    });
     if (response) {
-      let archivedUser: UserEntity = response
-      return archivedUser
-    }
-    else {
+      let archivedUser: UserEntity = response;
+      return archivedUser;
+    } else {
       return null;
     }
   }
-  async giveAdmin(id:string) {
+  async giveAdmin(id: string) {
     let response = await prisma.user.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
-        userRole: UserRole.ADMIN
-      }
-    })
+        userRole: UserRole.ADMIN,
+      },
+    });
     if (response) {
-      let archivedUser: UserEntity = response
-      return archivedUser
-    }
-    else {
+      let archivedUser: UserEntity = response;
+      return archivedUser;
+    } else {
       return null;
     }
   }

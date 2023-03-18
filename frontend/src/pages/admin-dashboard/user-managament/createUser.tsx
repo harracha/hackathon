@@ -31,7 +31,7 @@ const createUser = () => {
           password: data?.password,
         }),
       });
-      router.push("admin-dashboard/user-management");
+      router.push("/admin-dashboard/user-management");
     } catch (error) {
       console.error(`Error creating user ${error}`);
     }

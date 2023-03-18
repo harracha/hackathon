@@ -19,6 +19,7 @@ type user = {
 
 const index = () => {
   const [users, setUsers] = useState<user[]>();
+  const [deleteFlag, setDeleteFlag] = useState(1);
 
   const router = useRouter();
 
@@ -33,17 +34,22 @@ const index = () => {
   }
 
   async function deleteUser(id: string) {
-    const res = await fetch(`http://localhost:4000/user/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const res = await fetch(`http://localhost:4000/user/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setDeleteFlag(deleteFlag + 1);
+    } catch (error) {
+      console.error(`Error deleting user ${error}`);
+    }
   }
 
   useEffect(() => {
     load();
-  }, []);
+  }, [deleteFlag]);
   return (
     <div className="h-screen">
       <div className="h-full w-screen bg-accent-strong">

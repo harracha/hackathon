@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,8 +8,87 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String
-  lastname String
-  email    String
+  id           String   @id @default(uuid())
+  info         Json
+  email        String
+  password     String
+  userRole     UserRole
+  avatar       String?
+  googleUserId String?
+  Device       Device[]
+}
+
+model Device {
+  id         String       @id
+  name       String
+  userId     String
+  status     DeviceStatus
+  User       User         @relation(fields: [userId], references: [id])
+  Threat     Threat[]
+  Connection Connection[]
+}
+
+model Threat {
+  id       String     @id
+  deviceId String
+  type     ThreatType
+  info     Json
+  Device   Device     @relation(fields: [deviceId], references: [id])
+}
+
+model Connection {
+  id               String           @id
+  connectionStatus ConnectionStatus
+  connectionType   ConnectionType
+  Req              Req[]
+  Res              Res[]
+  Device           Device[]
+}
+
+model Req {
+  id               String     @id
+  connectionId     String
+  senderDeviceId   String
+  receiverDeviceId String
+  reqExpress       Json
+  Connection       Connection @relation(fields: [connectionId], references: [id])
+}
+
+model Res {
+  id               String     @id
+  connectionId     String
+  senderDeviceId   String
+  receiverDeviceId String
+  resExpress       Json
+  Connection       Connection @relation(fields: [connectionId], references: [id])
+}
+
+enum DeviceStatus {
+  ONLINE
+  OFFLINE
+  ARCHIVED
+}
+
+enum ThreatType {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum UserRole {
+  DEFAULT
+  ADMIN
+  SUPERADMIN
+  PENDING
+}
+
+enum ConnectionStatus {
+  ACTIVE
+  ARCHIVED
+  FLAGGED
+}
+
+enum ConnectionType {
+  INNER
+  OUTER
 }

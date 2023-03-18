@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
 
@@ -9,6 +10,9 @@ export abstract class UserRepository {
     throw new Error("Method not implemented.");
   }
   async create(user: UserEntity): Promise<UserEntity> {
+    throw new Error("Method not implemented.");
+  }
+  async getUserInfo(id: string): Promise<Prisma.JsonValue | null> {
     throw new Error("Method not implemented.");
   }
 }

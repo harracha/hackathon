@@ -8,30 +8,17 @@ datasource db {
 }
 
 model User {
-<<<<<<< HEAD
   id           String   @id @default(uuid())
   username     String @unique
   info         Json?
   email        String   @unique
-=======
-  id           String     @id @default(uuid())
-  info         Json?
-  email        String     @unique
->>>>>>> ee4ebfb00a9b62934a6ac19fc473d05235933a30
   password     String
   userRole     UserRole
   avatar       String?
   googleUserId String?
-<<<<<<< HEAD
   devices       Device[]
   userStatus UserStatus @default(PENDING)
   keywords String[]
-=======
-  userStatus   UserStatus @default(PENDING)
-  keywords     String[]
-  username     String     @unique
-  devices      Device[]
->>>>>>> ee4ebfb00a9b62934a6ac19fc473d05235933a30
 }
 
 model Device {

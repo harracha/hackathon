@@ -17,10 +17,20 @@ import giveAdminInteractor from "../interactors/giveAdminInteractor";
 import { PrismaClient } from "@prisma/client";
 import { userLogin } from "../model/userLogin";
 import dotenv from 'dotenv'
+import checkVercodeInteractor from "../interactors/checkVercodeInteractor";
+import { generateRandomString } from "../../../auth/auth";
+import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
+import listAllFlaggedInteractor from "../interactors/listAllFlaggedInteractor";
+import ReqRepositoryPrisma from "../../Req/repo/ReqRepositoryPrisma";
+import { ReqRepository } from "../../Req/repo/ReqRepository";
+import { ReqEntity } from "../../Req/model/ReqEntity";
 
 const prisma = new PrismaClient();
 const repo: UserRepository = new UserRepositoryPrisma();
 const jwt = require('jsonwebtoken')
+const reqRepo: ReqRepository = new ReqRepositoryPrisma();
+
 // middleware that is specific to this router
 router.use((req, res, next) => {
   console.log("Time: ", Date.now());
@@ -43,8 +53,42 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/create", jsonParser, async (req, res) => {
-  let user: UserEntity = await req.body;
+  const verCode = generateRandomString(16);
+  let user: UserEntity = {
+    ...(await req.body),
+    password: await bcrypt.hash(req.body.password, 10),
+    verCode: verCode,
+  };
   let data: UserEntity = await createUserInteractor(repo, user);
+
+  const str = "http://localhost:4000/user/verCode/" + user.id + "/" + verCode;
+  const html =
+    `<h1>HŽV</h1>
+      <p>za verifikaciju stisni na link</p>
+      <a href="` +
+    str +
+    `">dobar dan na hackathon</a>
+    `;
+
+  const transporter = nodemailer.createTransport({
+    host: "smtp.office365.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: "brainet_user_link@outlook.com",
+      pass: "Brainetlozinka",
+    },
+  });
+
+  const mailOptions = {
+    from: "brainet_user_link@outlook.com",
+    to: user.email,
+    subject: "Verification",
+    html: html,
+  };
+
+  await transporter.sendMail(mailOptions);
+
   res.status(200).json(data);
 });
 
@@ -113,6 +157,20 @@ router.post('/login', async (req: Request, res: Response) => {
   } catch {
     res.status(500).send();
   }
+});
+
+router.get("/verCode/:userId/:verCode", async (req, res) => {
+  let data: boolean = await checkVercodeInteractor(
+    repo,
+    req.params.userId,
+    req.params.verCode
+  );
+  res.status(200).json(data);
+});
+
+router.get("/flagged", async (req, res) => {
+  let data: ReqEntity[] = await listAllFlaggedInteractor(reqRepo);
+  res.status(200).json(data);
 });
 
 export default router;

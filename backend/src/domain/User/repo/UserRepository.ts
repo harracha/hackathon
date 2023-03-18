@@ -9,6 +9,9 @@ export abstract class UserRepository {
   async getById(id: string): Promise<UserEntity | null> {
     throw new Error("Method not implemented.");
   }
+  async checkVercode(id: string, vercode: string): Promise<boolean> {
+    throw new Error("Method not implemented.");
+  }
   async create(user: UserEntity): Promise<UserEntity> {
     throw new Error("Method not implemented.");
   }
@@ -30,5 +33,4 @@ export abstract class UserRepository {
   async giveAdmin(id: string): Promise<UserEntity | null> {
     throw new Error("Method not implemented.");
   }
-  
 }

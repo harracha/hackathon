@@ -48,7 +48,7 @@ router.get("/reqs/:id", async (req, res) => {
   res.status(200).json(data);
 });
 
-router.post("/reqs/respond/:id", async (req, res) => {
+router.post("/reqs/respond/:id", jsonParser, async (req, res) => {
   let response: ResEntity = req.body;
   let data: ResEntity | null = await respondToReqInteractor(
     reqRepo,
@@ -58,11 +58,19 @@ router.post("/reqs/respond/:id", async (req, res) => {
   res.status(200).json(data);
 });
 
-router.post("/create", jsonParser, async (req, res) => {
+router.post("/connect", jsonParser, async (req, res) => {
   let connection: ConnectionEntity = await req.body;
   let data: ConnectionEntity = await createConnectionInteractor(
     repo,
     connection
+  );
+  res.status(200).json(data);
+});
+
+router.patch("/disconnect/:id", async (req, res) => {
+  let data: ConnectionEntity | null = await archiveConnectionInteractor(
+    repo,
+    req.params.id
   );
   res.status(200).json(data);
 });

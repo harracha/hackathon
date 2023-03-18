@@ -28,6 +28,15 @@ const index = () => {
       .then((json) => setUsers(json));
   }
 
+  async function deleteUser(id: string) {
+    const res = await fetch(`http://localhost:4000/user/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   useEffect(() => {
     load();
   }, []);
@@ -51,8 +60,12 @@ const index = () => {
               actionRow={(user) => {
                 return (
                   <>
-                    <Button>
-                      <Icon icon="burgerMenu" className="bg-accent-strong" />
+                    <Button
+                      onClick={() => {
+                        deleteUser(user.id);
+                      }}
+                    >
+                      <Icon icon="delete" className="bg-accent-strong" />
                     </Button>
                   </>
                 );

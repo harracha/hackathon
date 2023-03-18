@@ -1,5 +1,9 @@
-# <Ime_aplikacije>
+# Brainet
 
-> Repository which contains our solution for the FrontEd hackathon hosted at Span
+> This repo contains our solution for the FrontEd hackathon hosted at Span
 
 ---
+
+Tech stack we used:
+
+## Frontend

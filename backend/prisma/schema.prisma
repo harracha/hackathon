@@ -19,6 +19,7 @@ model User {
   keywords     String[]
   username     String
   devices      Device[]
+  verCode      String?
 }
 
 model Device {

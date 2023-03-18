@@ -14,6 +14,7 @@ import deleteUserInteractor from "../interactors/deleteUserInteractor";
 import archiveUserInteractor from "../interactors/archiveUserInteractor";
 import approveUserInteractor from "../interactors/approveUserInteractor";
 import giveAdminInteractor from "../interactors/giveAdminInteractor";
+import checkVercodeInteractor from "../interactors/checkVercodeInteractor";
 
 const repo: UserRepository = new UserRepositoryPrisma();
 
@@ -71,6 +72,15 @@ router.patch("/admin/giveAdmin/:id", jsonParser, async (req, res) => {
 router.delete("/delete/:id", jsonParser, async (req, res) => {
   let userId = req.params.id;
   let data: UserEntity | null = await deleteUserInteractor(repo, userId);
+  res.status(200).json(data);
+});
+
+router.get("/user/verCode/:userId/:verCode", async (req, res) => {
+  let data: boolean = await checkVercodeInteractor(
+    repo,
+    req.params.userId,
+    req.params.verCode
+  );
   res.status(200).json(data);
 });
 

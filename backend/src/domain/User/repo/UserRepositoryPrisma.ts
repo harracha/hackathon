@@ -157,4 +157,17 @@ export default class UserRepositoryPrisma extends UserRepository {
       return null;
     }
   }
+
+  async checkVercode(id: string, vercode: string) {
+    let response = await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (response?.verCode == vercode) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

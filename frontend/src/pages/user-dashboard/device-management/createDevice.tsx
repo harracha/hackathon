@@ -4,6 +4,7 @@ import Footer from "~/components/footer/Footer";
 import Header from "~/components/header/Header";
 import Icon from "~/components/Icon/Icon";
 import { useRouter } from "next/navigation";
+import UserProtected from "~/components/protections/UserProtected";
 
 type deviceData = {
   name?: string;
@@ -39,26 +40,28 @@ const createUser = () => {
     <div>
       <Header />
       <div className="h-screen w-screen bg-accent-strong p-4 px-20">
-        <form action="">
-          <div className="caption mb-2 px-4 ">
-            <p className="my-2">Enter the new device's name:</p>
-            <input
-              className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
-              type="text"
-              onChange={(e) => {
-                setDeviceData({ ...deviceData, name: e.target.value });
+        <UserProtected>
+          <form action="">
+            <div className="caption mb-2 px-4 ">
+              <p className="my-2">Enter the new device's name:</p>
+              <input
+                className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
+                type="text"
+                onChange={(e) => {
+                  setDeviceData({ ...deviceData, name: e.target.value });
+                }}
+              />
+            </div>
+            <Button
+              onClick={() => {
+                createUser(deviceData);
               }}
-            />
-          </div>
-          <Button
-            onClick={() => {
-              createUser(deviceData);
-            }}
-            className="ml-5"
-          >
-            Add device <Icon icon="add" className="bg-white" />
-          </Button>
-        </form>
+              className="ml-5"
+            >
+              Add device <Icon icon="add" className="bg-white" />
+            </Button>
+          </form>
+        </UserProtected>
       </div>
     </div>
   );

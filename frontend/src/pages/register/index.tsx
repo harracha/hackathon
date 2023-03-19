@@ -3,7 +3,7 @@ import "aos/dist/aos.css";
 import { json } from "stream/consumers";
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/button/Button";
-import Logo from "~/components/logo/logo";
+import Logo from "~/components/logo/Logo";
 
 type userData = {
   username?: string;

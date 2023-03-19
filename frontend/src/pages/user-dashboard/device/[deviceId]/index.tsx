@@ -6,6 +6,7 @@ import { Button } from "~/components/button/Button";
 import Header from "~/components/header/Header";
 import Icon from "~/components/Icon/Icon";
 import { Table } from "~/components/table/Table";
+import UserProtected from "~/components/protections/UserProtected";
 interface connection {
   id: string;
   devices: [];
@@ -59,28 +60,30 @@ const index = () => {
     <div>
       <Header />
       <div className="h-screen w-screen bg-accent-strong">
-        <div className="p-4 px-20">
-          <div>All connections</div>
-          <Table
-            objects={connections || []}
-            titles={{
-              devices: "",
-              connectionStatus: "Connection status",
-            }}
-            onClick={(connection) => {
-              router.push("/connection/" + connection.id);
-            }}
-            actionRow={(connection) => {
-              return (
-                <>
-                  <Button onClick={() => deleteConnection(connection.id)}>
-                    <Icon icon="delete" className="bg-info " />
-                  </Button>
-                </>
-              );
-            }}
-          ></Table>
-        </div>
+        <UserProtected>
+          <div className="p-4 px-20">
+            <div>All connections</div>
+            <Table
+              objects={connections || []}
+              titles={{
+                devices: "",
+                connectionStatus: "Connection status",
+              }}
+              onClick={(connection) => {
+                router.push("/connection/" + connection.id);
+              }}
+              actionRow={(connection) => {
+                return (
+                  <>
+                    <Button onClick={() => deleteConnection(connection.id)}>
+                      <Icon icon="delete" className="bg-info " />
+                    </Button>
+                  </>
+                );
+              }}
+            ></Table>
+          </div>
+        </UserProtected>
       </div>
     </div>
   );

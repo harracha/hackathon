@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 const router = express.Router();
 import { Request, Response } from "express";
 import createUserInteractor from "../interactors/createUserInteractor";
@@ -37,6 +37,9 @@ router.use((req, res, next) => {
   console.log("Time: ", Date.now());
   next();
 });
+router.use(urlencoded({ extended: true }));
+router.use(express.json());
+
 var jsonParser = parser.json();
 dotenv.config();
 
@@ -132,15 +135,11 @@ router.post("/login", async (req: Request, res: Response) => {
 
   try {
     let body = await req.body;
-    let user: userLogin | null = await prisma.user.findUnique({
+    console.log(body)
+    let user: UserEntity | null = await prisma.user.findUnique({
       where: {
-        email: body.username,
-      },
-      select: {
-        email: true,
-        password: true,
-        userRole: true,
-      },
+        email: body.name,
+      }
     });
     let tokenizedUser = {
       email: user?.email,
@@ -158,7 +157,8 @@ router.post("/login", async (req: Request, res: Response) => {
     /* } else {
       res.send('Not Allowed');
     } */
-  } catch {
+  } catch (error){
+    console.log(error)
     res.status(500).send();
   }
 });

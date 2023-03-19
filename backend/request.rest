@@ -1,0 +1,34 @@
+GET http://localhost:4000/auth
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt5bGUiLCJwYXNzd29yZCI6InBhc3N3b3JkIiwiaWF0IjoxNjc5MTYwMDg3LCJleHAiOjE2NzkxNjE4ODd9.gIHFfmP_Oonwcm2l3bmLsdPVl56BEDb8PDjoJWCJpeE
+###
+
+POST http://localhost:4000/auth/signin
+Content-Type: application/json
+
+{
+  "name": "dominik.kanjuh@outlook.com",
+  "password": "password"
+}
+
+###
+
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "name": "Kyle",
+  "password": "password"
+}
+
+
+###
+
+POST http://localhost:4000/user/create
+Content-Type: application/json
+
+{
+  "username": "filip",
+  "email": "filip.burgler123@gmail.com",
+  "password": "pass",
+  "avatar": "avatar"
+}

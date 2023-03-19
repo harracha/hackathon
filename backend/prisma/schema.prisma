@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  info         Json?
+  email        String     @unique
+  password     String
+  userRole     UserRole
+  avatar       String?
+  googleUserId String?
+  userStatus   UserStatus @default(PENDING)
+  username     String
+  verCode      String?
+  devices      Device[]
+}
+
+model Device {
+  id         String       @id @default(uuid())
+  name       String
+  userId     String
+  status     DeviceStatus
+  keywords   String[]
+  user       User         @relation(fields: [userId], references: [id])
+  quarantine String[]
+  sent Req[]
+  connection Connection[] @relation("ConnectionToDevice")
+}
+
+model Connection {
+  id               String           @id @default(uuid())
+  connectionStatus ConnectionStatus @default(PENDING)
+  req              Req[]
+  res              Res[]
+  device           Device[]         @relation("ConnectionToDevice")
+}
+
+model Req {
+  id           String      @id @default(uuid())
+  connectionId String
+  body         String
+  httpMethod   HTTPMethods
+  httpVersion  String
+  isThreat     Boolean
+  deviceId     String
+  connection   Connection  @relation(fields: [connectionId], references: [id])
+  device       Device     @relation(fields: [deviceId], references: [id])
+  res          Res?
+}
+
+model Threat {
+  id String @id @default(uuid())
+  keywords String
+  published String
+  desc String
+  baseScore Float
+}
+
+model Res {
+  id           String     @id @default(uuid())
+  connectionId String
+  code         String
+  reqId        String     @unique
+  connection   Connection @relation(fields: [connectionId], references: [id])
+  req          Req        @relation(fields: [reqId], references: [id])
+}
+
+enum UserRole {
+  DEFAULT
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  ARCHIVED
+  PENDING
+}
+
+enum DeviceStatus {
+  ONLINE
+  OFFLINE
+  ARCHIVED
+}
+
+enum ThreatType {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum ConnectionStatus {
+  ACTIVE
+  ARCHIVED
+  FLAGGED
+  PENDING
+}
+
+enum HTTPMethods {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
+}

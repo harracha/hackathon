@@ -43,16 +43,6 @@ const index = () => {
           <h1 className="title1 mb-4 flex justify-start">Register</h1>
         </div>
         <div className="caption mb-2 flex-col items-center px-4">
-          <p className="title2 my-2">E-mail:</p>
-          <input
-            className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
-            type="text"
-            onChange={(e) => {
-              setUserData({ ...userData, email: e.target.value });
-            }}
-          />
-        </div>
-        <div className="caption mb-2 px-4 ">
           <p className="title2 my-2">Username:</p>
           <input
             className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
@@ -63,10 +53,20 @@ const index = () => {
           />
         </div>
         <div className="caption mb-2 px-4 ">
+          <p className="title2 my-2">E-Mail:</p>
+          <input
+            className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
+            type="email"
+            onChange={(e) => {
+              setUserData({ ...userData, email: e.target.value });
+            }}
+          />
+        </div>
+        <div className="caption mb-2 px-4 ">
           <p className="title2 my-2">Password:</p>
           <input
             className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
-            type="text"
+            type="password"
             onChange={(e) => {
               setUserData({ ...userData, password: e.target.value });
             }}
@@ -77,7 +77,7 @@ const index = () => {
             onClick={() => {
               createUser(userData);
             }}
-            className="mt-5  w-full"
+            className="mt-5  w-full hover:fill-accent-weak"
           >
             SIGN IN
           </Button>

@@ -11,6 +11,9 @@ export abstract class DeviceRepository {
   async update(data: updateDeviceEntity): Promise<DeviceEntity> {
     throw new Error("Method not implemented.");
   }
+  async create(data: DeviceEntity): Promise<DeviceEntity> {
+    throw new Error("Method not implemented.");
+  }
   async delete(id: string): Promise<DeviceEntity> {
     throw new Error("Method not implemented.");
   }

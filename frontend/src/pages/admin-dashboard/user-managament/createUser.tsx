@@ -4,6 +4,7 @@ import Footer from "~/components/footer/Footer";
 import Header from "~/components/header/Header";
 import Icon from "~/components/Icon/Icon";
 import { useRouter } from "next/navigation";
+import AdminProtected from "~/components/protections/AdminProtected";
 
 type userData = {
   username?: string;
@@ -43,47 +44,49 @@ const createUser = () => {
     <div>
       <Header />
       <div className="h-screen w-screen bg-accent-strong p-4 px-20">
-        <form action="">
-          <div className="caption mb-2 px-4 ">
-            <p className="my-2">Email:</p>
-            <input
-              className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
-              type="text"
-              onChange={(e) => {
-                setUserData({ ...userData, email: e.target.value });
+        <AdminProtected>
+          <form action="">
+            <div className="caption mb-2 px-4 ">
+              <p className="my-2">Email:</p>
+              <input
+                className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
+                type="text"
+                onChange={(e) => {
+                  setUserData({ ...userData, email: e.target.value });
+                }}
+              />
+            </div>
+            <div className="caption mb-2 px-4 ">
+              <p className="my-2">Password:</p>
+              <input
+                className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
+                type="text"
+                onChange={(e) => {
+                  setUserData({ ...userData, password: e.target.value });
+                }}
+              />
+            </div>
+            <div className="caption mb-2 px-4 ">
+              <p className="my-2">Username:</p>
+              <input
+                className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
+                type="text"
+                onChange={(e) => {
+                  setUserData({ ...userData, username: e.target.value });
+                }}
+              />
+            </div>
+            <Button
+              onClick={() => {
+                console.log(userData);
+                createUser(userData);
               }}
-            />
-          </div>
-          <div className="caption mb-2 px-4 ">
-            <p className="my-2">Password:</p>
-            <input
-              className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
-              type="text"
-              onChange={(e) => {
-                setUserData({ ...userData, password: e.target.value });
-              }}
-            />
-          </div>
-          <div className="caption mb-2 px-4 ">
-            <p className="my-2">Username:</p>
-            <input
-              className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
-              type="text"
-              onChange={(e) => {
-                setUserData({ ...userData, username: e.target.value });
-              }}
-            />
-          </div>
-          <Button
-            onClick={() => {
-              console.log(userData);
-              createUser(userData);
-            }}
-            className="ml-5"
-          >
-            Add user <Icon icon="add" className="bg-white" />
-          </Button>
-        </form>
+              className="ml-5"
+            >
+              Add user <Icon icon="add" className="bg-white" />
+            </Button>
+          </form>
+        </AdminProtected>
       </div>
     </div>
   );

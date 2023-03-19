@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import { Button } from "../button/Button";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
   return (
     <div className="w-full">
       <header className="flex h-14 w-full items-center justify-center bg-accent-strong px-8 text-white">
@@ -112,12 +115,15 @@ m-573 -1044 c181 -119 414 -273 520 -342 l192 -127 5 -50 c10 -106 25 -580 18
                 </Link>
               </li>
               <li className="flex items-center justify-center pl-3">
-                <Link
-                  href="/#"
+                <Button
+                  onClick={() => {
+                    localStorage.clear();
+                    router.push("/login");
+                  }}
                   className="title2 cursor-pointer text-info hover:text-accent-weak"
                 >
-                  Blog Post
-                </Link>
+                  Log Out
+                </Button>
               </li>
 
               <li></li>

@@ -28,7 +28,8 @@ model Device {
   status     DeviceStatus
   keywords   String[]
   user       User         @relation(fields: [userId], references: [id])
-  quarantine Req[]
+  quarantine String[]
+  sent Req[]
   connection Connection[] @relation("ConnectionToDevice")
 }
 
@@ -47,10 +48,22 @@ model Req {
   httpMethod   HTTPMethods
   httpVersion  String
   isThreat     Boolean
+<<<<<<< HEAD
+  deviceId     String
+=======
   deviceId     String?
+>>>>>>> 821ecc4025a9213accc2e1044db8adfda879e5a5
   connection   Connection  @relation(fields: [connectionId], references: [id])
-  device       Device?     @relation(fields: [deviceId], references: [id])
+  device       Device     @relation(fields: [deviceId], references: [id])
   res          Res?
+}
+
+model Threat {
+  id String @id @default(uuid())
+  keywords String
+  published String
+  desc String
+  baseScore Float
 }
 
 model Res {

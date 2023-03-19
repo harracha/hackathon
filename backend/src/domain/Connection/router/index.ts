@@ -18,6 +18,9 @@ import listReqsInConnectionInteractor from "../interactors/listReqsInConnectionI
 import ReqRepositoryPrisma from "../../Req/repo/ReqRepositoryPrisma";
 import { ReqRepository } from "../../Req/repo/ReqRepository";
 import respondToReqInteractor from "../interactors/respondToReqInteractor";
+import flagReqInteractor from "../interactors/flagReqInteractor";
+import DeviceRepositoryPrisma from "../../Device/repo/DeviceRepositoryPrisma";
+import { DeviceRepository } from "../../Device/repo/DeviceRepository";
 
 const repo: ConnectionRepository = new ConnectionRepositoryPrisma();
 const reqRepo: ReqRepository = new ReqRepositoryPrisma();
@@ -101,6 +104,14 @@ router.delete("/delete/:id", jsonParser, async (req, res) => {
     connectionId
   );
   res.status(200).json(data);
+});
+
+router.patch("/flag/:id", async (req, res) => {
+  let flagged: ReqEntity | null = await flagReqInteractor(
+    reqRepo,
+    req.params.id
+  );
+  res.status(200).json(flagged);
 });
 
 export default router;

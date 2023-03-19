@@ -11,8 +11,14 @@ import getDeviceByIdInteractor from "../interactors/getDeviceByIdInteractor";
 import updateDeviceInteractor from "../interactors/updateDeviceInteractor";
 import { updateDeviceEntity } from "../model/updateDeviceModel";
 import deleteDeviceInteractor from "../interactors/deleteDeviceInteractor";
+import { ReqEntity } from "../../Req/model/ReqEntity";
+import scanInteractor from "../interactors/scanInteractor";
+import { ReqRepository } from "../../Req/repo/ReqRepository";
+import ReqRepositoryPrisma from "../../Req/repo/ReqRepositoryPrisma";
+import addToQuarantineInteractor from "../interactors/addToQuarantineInteractor";
 
 const repo: DeviceRepository = new DeviceRepositoryPrisma();
+const reqRepo: ReqRepository = new ReqRepositoryPrisma();
 
 router.use((req, res, next) => {
   console.log(req.method);
@@ -47,6 +53,21 @@ router.delete("/delete/:id", async (req, res) => {
     deviceId
   );
   res.status(200).json(deletedDevice);
+});
+
+router.get("/scan/:id", async (req, res) => {
+  let deviceId = req.params.id;
+  let data: ReqEntity[] | null = await scanInteractor(reqRepo, deviceId);
+  res.status(200).json(data);
+});
+router.get("/quarantine/:id/:reqId", async (req, res) => {
+  let deviceId = req.params.id;
+  let data: string = await addToQuarantineInteractor(
+    repo,
+    deviceId,
+    req.params.reqId
+  );
+  res.status(200).json(data);
 });
 
 export default router;

@@ -2,12 +2,12 @@ import { Device, PrismaClient } from "@prisma/client";
 import { DeviceEntity } from "../model/deviceModel";
 import { updateDeviceEntity } from "../model/updateDeviceModel";
 import { DeviceRepository } from "./DeviceRepository";
+import keywords from "../../../../../keywords.json";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default class DeviceRepositoryPrisma extends DeviceRepository {
-    async getAll() {
-
+  async getAll() {
     let datas = await prisma.device.findMany();
 
     // map to UserEntities
@@ -18,47 +18,66 @@ export default class DeviceRepositoryPrisma extends DeviceRepository {
     });
 
     return devices;
-    }
+  }
 
-    async getById(id: string) {
-        let response = await prisma.device.findUnique({
-            where: {
-                id:id
-            }
-        });
-        if(response) {
-            let device: DeviceEntity = response;
-            return device
-        }
-        else { 
-            return null;
-        }
-        
-        
+  async getById(id: string) {
+    let response = await prisma.device.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (response) {
+      let device: DeviceEntity = response;
+      return device;
+    } else {
+      return null;
     }
+  }
 
-    async update(data: updateDeviceEntity) {
-        let response = await prisma.device.update({
-            where:{
-                id: data.id
-            },
-            data: {
-                name: data.name,
-                status: data.status
-            }
-        });
+  async update(data: updateDeviceEntity) {
+    let response = await prisma.device.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        name: data.name,
+        status: data.status,
+      },
+    });
 
-        let updatedDevice: DeviceEntity = response;
-        return updatedDevice
+    let updatedDevice: DeviceEntity = response;
+    return updatedDevice;
+  }
+
+  async delete(id: string) {
+    let response = await prisma.device.delete({
+      where: {
+        id: id,
+      },
+    });
+    let deletedDevice: DeviceEntity = response;
+    return deletedDevice;
+  }
+  async quarantine(id: string, reqId: string) {
+    let device = await prisma.device.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    let q = device?.quarantine;
+    q?.push(reqId);
+    let response = await prisma.device.update({
+      where: {
+        id: id,
+      },
+      data: {
+        quarantine: q,
+      },
+    });
+    if (response) {
+      return "success";
+    } else {
+      return "failure";
     }
-
-    async delete(id:string) { 
-        let response = await prisma.device.delete({
-            where: {
-                id:id
-            }
-        });
-        let deletedDevice: DeviceEntity = response; 
-        return deletedDevice;
-    }
+  }
 }

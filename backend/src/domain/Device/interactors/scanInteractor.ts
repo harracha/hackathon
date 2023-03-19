@@ -1,9 +1,9 @@
 import { ReqRepository } from "../../Req/repo/ReqRepository";
 
-export default async function flagReqInteractor(
+export default async function scanInteractor(
   reqRepository: ReqRepository,
   id: string
 ) {
-  let users = await reqRepository.flag(id);
-  return users;
+  let response = await reqRepository.scan(id);
+  return response;
 }

@@ -71,14 +71,6 @@ model Res {
   req          Req        @relation(fields: [reqId], references: [id])
 }
 
-model Threat {
-  id        String @id
-  keywords  String
-  published String
-  desc      String
-  baseScore Float
-}
-
 enum UserRole {
   DEFAULT
   ADMIN

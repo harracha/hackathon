@@ -23,7 +23,9 @@ const index = () => {
       var users = await fetch("http://localhost:4000/user/admin/flagged")
         .then((res) => res.json())
         .then((json) => setUsers(json));
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
@@ -50,9 +52,7 @@ const index = () => {
                 actionRow={(user) => {
                   return (
                     <>
-                      <Button onClick={() => {}}>
-                        <Icon icon="delete" className="bg-accent-strong" />
-                      </Button>
+                      <Icon icon="delete" className="bg-accent-strong" />
                     </>
                   );
                 }}

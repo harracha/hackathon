@@ -21,18 +21,20 @@ const index = () => {
   });
 
   async function createUser(data: userData) {
-    const res = await fetch("http://localhost:4000/user/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: data?.username,
-        email: data?.email,
-        password: data?.password,
-      }),
-    });
-    router.push("/login");
+    try {
+      const res = await fetch("http://localhost:4000/user/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: data?.username,
+          email: data?.email,
+          password: data?.password,
+        }),
+      });
+      router.push("/login");
+    } catch (error) {}
   }
 
   return (
@@ -79,7 +81,7 @@ const index = () => {
             }}
             className="mt-5  w-full hover:fill-accent-weak"
           >
-            SIGN IN
+            SIGN UP
           </Button>
         </div>
       </div>

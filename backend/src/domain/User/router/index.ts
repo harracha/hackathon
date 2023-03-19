@@ -163,7 +163,7 @@ router.post("/login", async (req: Request, res: Response) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30m" }
     );
-    res.json({ accessToken: accessToken});
+    res.json({ accessToken: accessToken, userId:user?.id, userRole: user?.userRole});
     /* } else {
       res.send('Not Allowed');
     } */

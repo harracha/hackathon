@@ -32,6 +32,12 @@ const index = () => {
     });
     var ab = await res.json();
     localStorage.setItem("token", JSON.stringify(ab));
+    if (ab.userRole == "DEFAULT") {
+      router.push("/user-dashboard");
+    }
+    if (ab.userRole == "ADMIN") {
+      router.push("/admin-dashboard");
+    }
   }
 
   useEffect(() => {

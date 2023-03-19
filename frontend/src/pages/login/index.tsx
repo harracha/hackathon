@@ -20,25 +20,26 @@ const index = () => {
   const [ab, setAb] = useState("");
 
   async function login() {
-    console.log("uso u login");
-    const res = await fetch("http://localhost:4000/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: form.username,
-        password: form.password,
-      }),
-    });
-    var ab = await res.json();
-    localStorage.setItem("token", JSON.stringify(ab));
-    if (ab.userRole == "DEFAULT") {
-      router.push("/user-dashboard");
-    }
-    if (ab.userRole == "ADMIN") {
-      router.push("/admin-dashboard");
-    }
+    try {
+      const res = await fetch("http://localhost:4000/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.username,
+          password: form.password,
+        }),
+      });
+      var ab = await res.json();
+      localStorage.setItem("token", JSON.stringify(ab));
+      if (ab.userRole == "DEFAULT") {
+        router.push("/user-dashboard");
+      }
+      if (ab.userRole == "ADMIN") {
+        router.push("/admin-dashboard");
+      }
+    } catch (error) {}
   }
 
   useEffect(() => {
@@ -67,7 +68,7 @@ const index = () => {
             <p className="title2 my-2">Password:</p>
             <input
               className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
-              type="text"
+              type="password"
               onChange={(e) => {
                 setForm({ ...form, password: e.target.value });
               }}

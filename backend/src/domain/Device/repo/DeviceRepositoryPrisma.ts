@@ -2,7 +2,6 @@ import { Device, PrismaClient } from "@prisma/client";
 import { DeviceEntity } from "../model/deviceModel";
 import { updateDeviceEntity } from "../model/updateDeviceModel";
 import { DeviceRepository } from "./DeviceRepository";
-import keywords from "../../../../../keywords.json";
 
 const prisma = new PrismaClient();
 

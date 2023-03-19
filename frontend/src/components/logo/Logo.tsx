@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-
+//sdffdafd
 const Logo = () => {
   return (
     <div className="flex h-screen w-[55%] items-center justify-center bg-gradient-to-r from-accent-strong to-black fill-info shadow-2xl">

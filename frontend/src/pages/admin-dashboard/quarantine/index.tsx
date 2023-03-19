@@ -23,7 +23,9 @@ const index = () => {
       var users = await fetch("http://localhost:4000/user/admin/flagged")
         .then((res) => res.json())
         .then((json) => setUsers(json));
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
@@ -41,20 +43,6 @@ const index = () => {
           </div>
           <div>
             <div className="">
-              <Table
-                objects={users || []}
-                titles={{ body: "body", httpMethod: "http method", id: "id" }}
-                onClick={(user) => {
-                  router.push("/user/" + user.id);
-                }}
-                actionRow={(user) => {
-                  return (
-                    <>
-                      <Icon icon="delete" className="bg-accent-strong" />
-                    </>
-                  );
-                }}
-              ></Table>
               <Table
                 objects={users || []}
                 titles={{ body: "body", httpMethod: "http method", id: "id" }}

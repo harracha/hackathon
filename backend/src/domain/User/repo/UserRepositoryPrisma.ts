@@ -89,7 +89,6 @@ export default class UserRepositoryPrisma extends UserRepository {
         userRole: data.userRole, //PROMJENITI U PENDING
         avatar: data.avatar,
         googleUserId: data.googleUserId,
-        keywords: data.keywords,
         userStatus: data.userStatus,
       },
     });

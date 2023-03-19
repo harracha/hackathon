@@ -34,4 +34,7 @@
 
 // module.exports = config;
 
-{}
+{
+    "extends": "next/core-web-vitals"
+  }
+  

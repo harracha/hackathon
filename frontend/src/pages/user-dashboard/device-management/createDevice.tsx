@@ -43,7 +43,7 @@ const createUser = () => {
         <UserProtected>
           <form action="">
             <div className="caption mb-2 px-4 ">
-              <p className="my-2">Enter the new device's name:</p>
+              <p className="my-2">Enter the name for the new device:</p>
               <input
                 className="w-[80%] rounded-xl p-4 text-accent-medium outline-none transition-all duration-150 focus:border-[1px] focus:border-accent-weak focus:bg-black "
                 type="text"

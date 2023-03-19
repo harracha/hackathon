@@ -50,11 +50,7 @@ const index = () => {
                 actionRow={(user) => {
                   return (
                     <>
-                      <Button
-                        onClick={() => {
-                          deleteUser(user.id);
-                        }}
-                      >
+                      <Button onClick={() => {}}>
                         <Icon icon="delete" className="bg-accent-strong" />
                       </Button>
                     </>

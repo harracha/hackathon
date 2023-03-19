@@ -106,7 +106,7 @@ router.delete("/delete/:id", jsonParser, async (req, res) => {
   res.status(200).json(data);
 });
 
-router.patch("/flag/:id", async (req, res) => {
+router.post("/flag/:id", async (req, res) => {
   let flagged: ReqEntity | null = await flagReqInteractor(
     reqRepo,
     req.params.id

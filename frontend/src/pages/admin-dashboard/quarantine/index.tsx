@@ -50,13 +50,21 @@ const index = () => {
                 actionRow={(user) => {
                   return (
                     <>
-                      <Button
-                        onClick={() => {
-                          deleteUser(user.id);
-                        }}
-                      >
-                        <Icon icon="delete" className="bg-accent-strong" />
-                      </Button>
+                      <Icon icon="delete" className="bg-accent-strong" />
+                    </>
+                  );
+                }}
+              ></Table>
+              <Table
+                objects={users || []}
+                titles={{ body: "body", httpMethod: "http method", id: "id" }}
+                onClick={(user) => {
+                  router.push("/user/" + user.id);
+                }}
+                actionRow={(user) => {
+                  return (
+                    <>
+                      <Icon icon="delete" className="bg-accent-strong" />
                     </>
                   );
                 }}

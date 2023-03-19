@@ -23,9 +23,18 @@ interface device {
   quarantine: [];
 }
 
+type requestData = {
+  httpMethod: string;
+  body: string;
+};
+
 const index = () => {
   const [connections, setConnections] = useState<connection[]>([]);
   const [deleteFlag, setDeleteFlag] = useState(1);
+  const [request, setRequest] = useState<requestData>({
+    httpMethod: "",
+    body: "",
+  });
 
   useEffect(() => {
     const fetchConnections = async () => {
@@ -56,6 +65,8 @@ const index = () => {
 
   const router = useRouter();
 
+  function sendRequest(request: requestData) {}
+
   return (
     <div>
       <Header />
@@ -82,6 +93,19 @@ const index = () => {
                 );
               }}
             ></Table>
+            <div>
+              <p className="caption">HTTP method</p>
+              <input type="text" />
+              <p className="caption">Request body</p>
+              <input type="text" />
+              <Button
+                onClick={() => {
+                  sendRequest(request);
+                }}
+              >
+                Send request
+              </Button>
+            </div>
           </div>
         </UserProtected>
       </div>

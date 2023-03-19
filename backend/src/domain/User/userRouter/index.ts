@@ -187,11 +187,21 @@ import {
   publicProcedure,
 } from "../../../controllers/middleware/auth";
 import { t } from "../../../controllers/trpc";
+import { ReqEntity } from "../../Req/model/ReqEntity";
+import ReqRepositoryPrisma from "../../Req/repo/ReqRepositoryPrisma";
 import createUserInteractor from "../interactors/createUserInteractor";
+import deleteUserInteractor from "../interactors/deleteUserInteractor";
+import getUserByIdInteractor from "../interactors/getUserByEmailInteractor";
+import giveAdminInteractor from "../interactors/giveAdminInteractor";
+import listAllFlaggedInteractor from "../interactors/listAllFlaggedInteractor";
+import listUsersInteractor from "../interactors/listUsersInteractor";
+import updateUserInteractor from "../interactors/updateUserInteractor";
+import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
 import UserRepositoryPrisma from "../repo/UserRepositoryPrisma";
 
 let repo = new UserRepositoryPrisma();
+let reqRepo = new ReqRepositoryPrisma();
 
 export default t.router({
   createUser: adminProcedure
@@ -215,193 +225,53 @@ export default t.router({
       return newUser;
     }),
 
-  // deleteUserById: adminProcedure
-  //   .input(z.string())
-  //   .mutation(async ({ input }) => {
-  //     let a = await deleteUserInteractor(input, repo, enrollmentRepo);
-  //     return a;
-  //   }),
+  deleteUserById: adminProcedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      let a = await deleteUserInteractor(repo, input);
+      return a;
+    }),
 
-  // getUserById: publicProcedure.input(z.string()).query(async ({ input }) => {
-  //   let user = await getUserInteractor(repo, input);
-  //   return user;
-  // }),
+  getUserById: publicProcedure.input(z.string()).query(async ({ input }) => {
+    let user = await getUserByIdInteractor(repo, input);
+    return user;
+  }),
 
-  // listUsers: publicProcedure.query(async () => {
-  //   let users = await listUsersInteractor(repo);
-  //   return users as UserEntity[];
-  // }),
+  listUsers: publicProcedure.query(async () => {
+    let users = await listUsersInteractor(repo);
+    return users as UserEntity[];
+  }),
 
-  // listUsersPaginated: publicProcedure
-  //   .input(paginationObj)
-  //   .query(async ({ input }) => {
-  //     let response = await listPaginatedUsersInteractor(repo, input);
-  //     //Popraviti ovo
-  //     let len = (await listUsersInteractor(repo)).length;
-  //     return { users: response, numberOfUsers: len };
-  //   }),
+  updateUserById: publicProcedure
 
-  // updateUserById: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        email: z.string().optional(),
+        password: z.string().optional(),
+        userRole: z.enum(["DEFAULT", "ADMIN"]).optional(),
+        userStatus: z.enum(["ACTIVE", "ARCHIVED", "PENDING"]).optional(),
+        username: z.string().optional(),
+        info: z.null(),
+        keywords: z.array(z.string()).optional(),
+        avatar: z.string().optional(),
+        googleUserId: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      let user: updateUserEntity = { ...input };
+      let updatedUser = await updateUserInteractor(repo, user);
+      return updatedUser;
+    }),
 
-  //   .input(
-  //     z.object({
-  //       id: z.string(),
-  //       firstname: z.string().optional(),
-  //       lastname: z.string().optional(),
-  //       password: z.string().optional(),
-  //       jmbag: z.string().optional(),
-  //       email: z.string().optional(),
-  //       userRole: z.enum(["DEFAULT", "ADMIN", "SUPERADMIN"]).optional(),
-  //       mentorID: z.string().optional(),
-  //       avatar: z.string().optional(),
-  //       googleUserId: z.string().nullable().optional(),
-  //     })
-  //   )
-  //   .mutation(async ({ input }) => {
-  //     let user: updateUserEntity = { ...input };
-  //     let updatedUser = await updateUserInteractor(repo, user);
-  //     return updatedUser;
-  //   }),
+  giveAdmin: adminProcedure.input(z.string()).mutation(async ({ input }) => {
+    let userId: string = input;
+    let updatedUser = await giveAdminInteractor(repo, userId);
+    return updatedUser;
+  }),
 
-  // enrollUser: publicProcedure
-
-  //   .input(
-  //     z.object({
-  //       userId: z.string(),
-  //       subjectId: z.string(),
-  //       enrollmentDate: z.date().optional(),
-  //       roleTitle: z.enum([
-  //         "STUDENT",
-  //         "PROFESSOR",
-  //         "OWNER",
-  //         "DEMONSTRATOR",
-  //         "ASSISTANT",
-  //       ]),
-  //       status: z.enum(["ACTIVE", "ARCHIVED"]),
-  //     })
-  //   )
-  //   .mutation(async ({ input }) => {
-  //     let enrollmentExists: boolean = await isUserEnrolledInteractor(
-  //       enrollmentRepo,
-  //       input.userId,
-  //       input.subjectId
-  //     );
-
-  //     if (enrollmentExists)
-  //       throw new Error(
-  //         "This User already has an ACTIVE Enrollment with this Subject"
-  //       );
-  //     else {
-  //       let enrollment: EnrollmentEntity = {
-  //         ...input,
-  //         id: undefined,
-  //         userId: input.userId,
-  //         subjectId: input.subjectId,
-  //         enrollmentDate: input.enrollmentDate || null,
-  //         roleTitle: input.roleTitle,
-  //         status: input.status,
-  //       };
-  //       let newEnrollment = await enrollUserInteractor(
-  //         enrollment,
-  //         enrollmentRepo
-  //       );
-  //       return newEnrollment;
-  //     }
-  //   }),
-
-  // isUserEnrolled: publicProcedure
-  //   .input(
-  //     z.object({
-  //       userId: z.string(),
-  //       subjectId: z.string(),
-  //     })
-  //   )
-  //   .query(async ({ input }) => {
-  //     let isEnrolled = await isUserEnrolledInteractor(
-  //       enrollmentRepo,
-  //       input.userId,
-  //       input.subjectId
-  //     );
-  //     return isEnrolled;
-  //   }),
-
-  // wasUserEnrolled: publicProcedure
-  //   .input(
-  //     z.object({
-  //       userId: z.string(),
-  //       subjectId: z.string(),
-  //     })
-  //   )
-  //   .query(async ({ input }) => {
-  //     let wasEnrolled = await wasUserEnrolledInteractor(
-  //       enrollmentRepo,
-  //       input.userId,
-  //       input.subjectId
-  //     );
-  //     return wasEnrolled;
-  //   }),
-
-  // getEnrolledSubjects: publicProcedure
-  //   .input(
-  //     z.object({
-  //       active: z.boolean().optional(),
-  //       archived: z.boolean().optional(),
-  //       userId: z.string(),
-  //     })
-  //   )
-  //   .query(async ({ input }) => {
-  //     let enrollments = await listEnrolledSubjectsInteractor(
-  //       enrollmentRepo,
-  //       input.active,
-  //       input.archived,
-  //       input.userId
-  //     );
-  //     return enrollments;
-  //   }),
-
-  // updateEnrollment: publicProcedure
-
-  //   .input(
-  //     z.object({
-  //       id: z.string(),
-  //       userId: z.string().optional(),
-  //       subjectId: z.string().optional(),
-  //       enrollmentDate: z.date().optional(),
-  //       roleTitle: z
-  //         .enum(["STUDENT", "PROFESSOR", "OWNER", "DEMONSTRATOR", "ASSISTANT"])
-  //         .optional(),
-  //       status: z.enum(["ACTIVE", "ARCHIVED"]).optional(),
-  //     })
-  //   )
-  //   .mutation(async ({ input }) => {
-  //     let updateData = {
-  //       ...input,
-  //       id: input.id,
-  //       userId: input.userId,
-  //       subjectId: input.subjectId,
-  //       roleTitle: input.roleTitle,
-  //       status: input.status,
-  //     };
-
-  //     let updatedEnrollment = await updateEnrollmentInteractor(
-  //       enrollmentRepo,
-  //       updateData as EnrollmentEntity
-  //     );
-  //     return updatedEnrollment;
-  //   }),
-
-  // listMentees: t.procedure.input(z.string()).query(async ({ input }) => {
-  //   let mentees = await listMenteesInteractor(repo, input);
-  //   return mentees;
-  // }),
-
-  // getUserPosts: publicProcedure.input(z.string()).query(async ({ input }) => {
-  //   let response = await getUserPostsInteractor(postRepo, input);
-  //   return response;
-  // }),
-
-  // listUserPosts: publicProcedure.query(async () => {
-  //   let response = await listUserPostsInteractor(postRepo);
-  //   return response;
-  // }),
+  listFlagged: adminProcedure.query(async () => {
+    let users = await listAllFlaggedInteractor(reqRepo);
+    return users as ReqEntity[];
+  }),
 });

@@ -14,7 +14,7 @@ model User {
   password     String
   userRole     UserRole
   avatar       String?
-  googleUserId String?
+  googleUserId String? @unique
   userStatus   UserStatus @default(PENDING)
   keywords     String[]
   username     String

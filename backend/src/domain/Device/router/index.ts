@@ -56,7 +56,7 @@ router.delete("/delete/:id", async (req, res) => {
   res.status(200).json(deletedDevice);
 });
 
-router.patch("/update/:id", jsonParser, async (req, res) => {
+router.post("/", jsonParser, async (req, res) => {
   let body = req.body;
   let updateData: DeviceEntity = body;
   let data: DeviceEntity = await addDeviceInteractor(repo, updateData);

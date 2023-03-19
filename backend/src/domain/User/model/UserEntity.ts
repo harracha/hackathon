@@ -12,8 +12,5 @@ export type UserEntity = {
   googleUserId?: string | null;
   devices?: Device[];
   userStatus: UserStatus;
-  keywords: string[];
-  verCode?: string | null
+  verCode?: string | null;
 };
-
-

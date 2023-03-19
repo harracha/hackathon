@@ -16,7 +16,6 @@ model User {
   avatar       String?
   googleUserId String?
   userStatus   UserStatus @default(PENDING)
-  keywords     String[]
   username     String
   verCode      String?
   devices      Device[]
@@ -28,8 +27,10 @@ model Device {
   userId     String
   status     DeviceStatus
   user       User         @relation(fields: [userId], references: [id])
-  quarantine Req[]
+  quarantine String[]
+  sent Req[]
   connection Connection[] @relation("ConnectionToDevice")
+  keywords     String[]
 }
 
 model Connection {
@@ -47,11 +48,18 @@ model Req {
   httpMethod   HTTPMethods
   httpVersion  String
   isThreat     Boolean
-  threat       String?
-  deviceId     String?
+  deviceId     String
   connection   Connection  @relation(fields: [connectionId], references: [id])
-  device       Device?     @relation(fields: [deviceId], references: [id])
+  device       Device     @relation(fields: [deviceId], references: [id])
   res          Res?
+}
+
+model Threat {
+  id String @id @default(uuid())
+  keywords String
+  published String
+  desc String
+  baseScore Float
 }
 
 model Res {

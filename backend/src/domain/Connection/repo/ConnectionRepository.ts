@@ -1,6 +1,9 @@
 import { Prisma } from "@prisma/client";
 import { updateConnectionEntity } from "../model/updateConnectionEntity";
 import { ConnectionEntity } from "../model/ConnectionEntity";
+import { ResEntity } from "../../Res/model/ResEntity";
+import { ReqEntity } from "../../Req/model/ReqEntity";
+import { DeviceEntity } from "../../Device/model/deviceModel";
 
 export abstract class ConnectionRepository {
   async getAll(): Promise<ConnectionEntity[]> {

@@ -3,8 +3,12 @@ import { updateReqEntity } from "../model/updateReqEntity";
 import { ReqEntity } from "../model/ReqEntity";
 import { ReqRepository } from "./ReqRepository";
 import { ResEntity } from "../../Res/model/ResEntity";
+import flagReqInteractor from "../../Connection/interactors/flagReqInteractor";
+import addToQuarantineInteractor from "../../Device/interactors/addToQuarantineInteractor";
+import DeviceRepositoryPrisma from "../../Device/repo/DeviceRepositoryPrisma";
 
 const prisma = new PrismaClient();
+const devRepo = new DeviceRepositoryPrisma();
 
 export default class ReqRepositoryPrisma extends ReqRepository {
   async getAll() {
@@ -108,7 +112,6 @@ export default class ReqRepositoryPrisma extends ReqRepository {
         body: req.body,
         deviceId: req.deviceId,
         isThreat: req.isThreat,
-        threat: req.threat,
       },
     });
 
@@ -116,24 +119,23 @@ export default class ReqRepositoryPrisma extends ReqRepository {
     return out;
   }
 
-  async update(data: updateReqEntity) {
-    let response = await prisma.req.update({
-      where: {
-        id: data.id,
-      },
-      data: {
-        connectionId: data.connectionId,
-        httpVersion: data.httpVersion,
-        httpMethod: data.httpMethod,
-        body: data.body,
-        deviceId: data.deviceId,
-        isThreat: data.isThreat,
-        threat: data.threat,
-      },
-    });
-    let updated: ReqEntity = response;
-    return updated;
-  }
+  // async update(data: updateReqEntity) {
+  //   let response = await prisma.req.update({
+  //     where: {
+  //       id: data.id,
+  //     },
+  //     data: {
+  //       connectionId: data.connectionId,
+  //       httpVersion: data.httpVersion,
+  //       httpMethod: data.httpMethod,
+  //       body: data.body,
+  //       deviceId: data.deviceId,
+  //       isThreat: data.isThreat,
+  //     },
+  //   });
+  //   let updated: ReqEntity = response;
+  //   return updated;
+  // }
 
   async delete(id: string) {
     let response = await prisma.req.delete({
@@ -152,12 +154,13 @@ export default class ReqRepositoryPrisma extends ReqRepository {
         id: id,
       },
       data: {
-        isThreat: true ? false : true,
+        isThreat: true,
       },
     });
+    addToQuarantineInteractor(devRepo, response.deviceId, id);
     if (response) {
-      let archivedReq: ReqEntity = response;
-      return archivedReq;
+      let result: ReqEntity = response;
+      return result;
     } else {
       return null;
     }
@@ -175,6 +178,53 @@ export default class ReqRepositoryPrisma extends ReqRepository {
     if (response) {
       let res: ResEntity = response;
       return res;
+    } else {
+      return null;
+    }
+  }
+
+  async scan(id: string) {
+    let reqs = await prisma.req.findMany({
+      where: {
+        deviceId: id,
+      },
+    });
+    let device = await prisma.device.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    let localKeyWs = device?.keywords;
+    let threats = await prisma.threat.findMany();
+    let flag: boolean = false;
+    let keyws: string[] = [];
+    let flagged: ReqEntity[] = [];
+    let num: number = 0;
+    reqs.forEach((r: ReqEntity) => {
+      threats.forEach((t) => {
+        keyws = t.keywords.split(":");
+        localKeyWs?.forEach((local) => {
+          keyws.push(local);
+        });
+        keyws.forEach((k) => {
+          if (r.body.includes(k)) num += 1;
+        });
+        if (num > 2) flag = true;
+        num = 0;
+      });
+      if (flag) {
+        flagged.push(r);
+      }
+      flag = false;
+    });
+
+    let reqRepo = new ReqRepositoryPrisma();
+    flagged.forEach((f) => {
+      flagReqInteractor(reqRepo, f.id);
+    });
+
+    if (flagged.length > 0) {
+      return flagged;
     } else {
       return null;
     }

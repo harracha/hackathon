@@ -41,4 +41,7 @@ export abstract class ReqRepository {
   async flag(id: string): Promise<ReqEntity | null> {
     throw new Error("Method not implemented.");
   }
+  async scan(id: string): Promise<ReqEntity[] | null> {
+    throw new Error("Method not implemented.");
+  }
 }

@@ -8,7 +8,6 @@ import {
 import { updateUserEntity } from "../model/updateUserEntity";
 import { UserEntity } from "../model/UserEntity";
 import { UserRepository } from "./UserRepository";
-import keywords from "../../../../../keywords.json";
 
 const prisma = new PrismaClient();
 
@@ -29,15 +28,13 @@ export default class UserRepositoryPrisma extends UserRepository {
 
   async getById(id: string) {
     let data = await prisma.user.findUnique({ where: { id: id } });
-    
-    if (data){
+
+    if (data) {
       let user: UserEntity = data;
       return user;
+    } else {
+      return null;
     }
-    else {
-      return null
-    }
-      
   }
 
   async create(user: UserEntity) {
@@ -45,7 +42,6 @@ export default class UserRepositoryPrisma extends UserRepository {
       | undefined
       | Prisma.NullableJsonNullValueInput
       | Prisma.InputJsonValue = user.info ? user.info : undefined;
-    let keyw: string[] = keywords.keywords;
     let response = await prisma.user.create({
       data: {
         id: user.id,
@@ -57,8 +53,7 @@ export default class UserRepositoryPrisma extends UserRepository {
         avatar: user.avatar,
         googleUserId: user.googleUserId,
         userStatus: UserStatus.PENDING,
-        keywords: keyw,
-        verCode: user.verCode
+        verCode: user.verCode,
       },
     });
 

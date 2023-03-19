@@ -1,24 +1,29 @@
+import Link from "next/link";
 import React from "react";
 
 const Logo = () => {
   return (
     <div className="flex h-screen w-[55%] items-center justify-center bg-gradient-to-r from-accent-strong to-black fill-info shadow-2xl">
-      <svg
-        version="1.0"
-        xmlns="http://www.w3.org/2000/svg"
-        width="1050pt"
-        height="883"
-        viewBox="0 0 1050.000000 883.000000"
-        preserveAspectRatio="xMidYMid meet"
-        className="h-[70%] w-[70%]"
+      <Link
+        href="/"
+        className="flex h-screen w-[100%] cursor-pointer items-center justify-center fill-info hover:fill-accent-weak"
       >
-        <g
-          transform="translate(0.000000,883.000000) scale(0.100000,-0.100000)"
-          fill="#"
-          stroke="none"
+        <svg
+          version="1.0"
+          xmlns="http://www.w3.org/2000/svg"
+          width="1050pt"
+          height="883"
+          viewBox="0 0 1050.000000 883.000000"
+          preserveAspectRatio="xMidYMid meet"
+          className="h-[70%] w-[70%]"
         >
-          <path
-            d="M3450 8544 c-399 -155 -783 -306 -855 -333 -71 -28 -439 -171 -817
+          <g
+            transform="translate(0.000000,883.000000) scale(0.100000,-0.100000)"
+            fill="#"
+            stroke="none"
+          >
+            <path
+              d="M3450 8544 c-399 -155 -783 -306 -855 -333 -71 -28 -439 -171 -817
 -319 l-686 -267 -537 -720 c-295 -396 -539 -725 -542 -732 -2 -6 29 -118 70
 -250 69 -218 128 -406 370 -1178 47 -148 129 -409 182 -580 53 -170 101 -314
 105 -318 4 -5 335 -59 736 -121 584 -90 728 -115 726 -127 -2 -8 -62 -126
@@ -81,9 +86,10 @@ m-573 -1044 c181 -119 414 -273 520 -342 l192 -127 5 -50 c10 -106 25 -580 18
 -830 l408 -215 66 -202 c37 -111 131 -400 211 -642 79 -242 147 -450 151 -462
 7 -23 7 -23 -111 -23 l-119 0 -512 875 c-281 481 -512 877 -512 880 0 3 2 5 5
 5 2 0 188 -97 413 -216z"
-          />
-        </g>
-      </svg>
+            />
+          </g>
+        </svg>
+      </Link>
     </div>
   );
 };

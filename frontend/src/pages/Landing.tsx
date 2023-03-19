@@ -58,7 +58,7 @@ const Landing = () => {
           data-aos="fade-right"
           className="caption1 grad flex  items-center justify-center text-white "
         >
-          If you're ready to take your online security to the next level, then
+          If you are ready to take your online security to the next level, then
           Brainet is the application for you. Try it now and see for yourself
           why we are the trusted choice of discerning individuals who demand the
           best. With Brainet, you can rest easy, knowing that you are protected

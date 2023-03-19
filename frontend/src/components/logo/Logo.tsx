@@ -10,7 +10,7 @@ const Logo = () => {
         height="883"
         viewBox="0 0 1050.000000 883.000000"
         preserveAspectRatio="xMidYMid meet"
-        className="h-full w-full"
+        className="h-[70%] w-[70%]"
       >
         <g
           transform="translate(0.000000,883.000000) scale(0.100000,-0.100000)"

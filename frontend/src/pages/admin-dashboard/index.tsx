@@ -9,6 +9,7 @@ import { Section } from "../../components/page/Section";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import AdminProtected from "~/components/protections/AdminProtected";
 
 type user = {
   id: string;
@@ -50,11 +51,15 @@ const index = () => {
       <Header />
       <div>
         <div className="flex h-screen w-screen flex-col justify-center  bg-accent-strong p-2">
-          <div className="flex  h-full w-full flex-col justify-start gap-2 p-2">
-            <div className="p  h-[10%] w-[100%] rounded-xl bg-accent p-3 ">
-              <h1 className="title1 text-info">Welcome back, {s?.email}!</h1>
-            </div>
-            {/* <Section>
+          <AdminProtected>
+            <>
+              <div className="flex  h-full w-full flex-col justify-start gap-2 p-2">
+                <div className="p  h-[10%] w-[100%] rounded-xl bg-accent p-3 ">
+                  <h1 className="title1 text-info">
+                    Welcome back, {s?.email}!
+                  </h1>
+                </div>
+                {/* <Section>
                <Table
                 objects={users || []}
                 titles={{ password: "password", email: "email" }}
@@ -72,53 +77,55 @@ const index = () => {
                 }}
               ></Table> 
             </Section> */}
-            <div className="grid h-full w-full grid-cols-1 gap-2 sm:grid-cols-2">
-              <Link
-                className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
-                href="/admin-dashboard/user-managament"
-              >
-                <div>
-                  <p className="title1">User Managament</p>
-                  <p className="caption2 text-white">
-                    Click here to add, delete, or edit users
-                  </p>
+                <div className="grid h-full w-full grid-cols-1 gap-2 sm:grid-cols-2">
+                  <Link
+                    className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
+                    href="/admin-dashboard/user-managament"
+                  >
+                    <div>
+                      <p className="title1">User Managament</p>
+                      <p className="caption2 text-white">
+                        Click here to add, delete, or edit users
+                      </p>
+                    </div>
+                  </Link>
+                  <Link
+                    className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
+                    href="/admin-dashboard/quarantine"
+                  >
+                    <div>
+                      <p className="title1">Quarantine</p>
+                      <p className="caption2 text-white">
+                        This is where threats are located
+                      </p>
+                    </div>
+                  </Link>
+                  <Link
+                    className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
+                    href="/admin-dashboard/connections"
+                  >
+                    <div>
+                      <p className="title1">Connections</p>
+                      <p className="caption2 text-white">
+                        You can find a list of connections here
+                      </p>
+                    </div>
+                  </Link>
+                  <Link
+                    className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
+                    href="/admin-dashboard/analytics"
+                  >
+                    <div>
+                      <p className="title1">Analytics</p>
+                      <p className="caption2 text-white">
+                        Click here to take a look at analytics
+                      </p>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-              <Link
-                className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
-                href="/admin-dashboard/quarantine"
-              >
-                <div>
-                  <p className="title1">Quarantine</p>
-                  <p className="caption2 text-white">
-                    This is where threats are located
-                  </p>
-                </div>
-              </Link>
-              <Link
-                className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
-                href="/admin-dashboard/connections"
-              >
-                <div>
-                  <p className="title1">Connections</p>
-                  <p className="caption2 text-white">
-                    You can find a list of connections here
-                  </p>
-                </div>
-              </Link>
-              <Link
-                className="flex h-full items-center justify-center rounded-xl bg-accent text-center text-info shadow-xl transition-all duration-150 hover:bg-accent-medium"
-                href="/admin-dashboard/analytics"
-              >
-                <div>
-                  <p className="title1">Analytics</p>
-                  <p className="caption2 text-white">
-                    Click here to take a look at analytics
-                  </p>
-                </div>
-              </Link>
-            </div>
-          </div>
+              </div>
+            </>
+          </AdminProtected>
         </div>
       </div>
     </div>

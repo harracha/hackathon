@@ -16,7 +16,6 @@ model User {
   avatar       String?
   googleUserId String?
   userStatus   UserStatus @default(PENDING)
-  keywords     String[]
   username     String
   verCode      String?
   devices      Device[]
@@ -27,6 +26,7 @@ model Device {
   name       String
   userId     String
   status     DeviceStatus
+  keywords   String[]
   user       User         @relation(fields: [userId], references: [id])
   quarantine Req[]
   connection Connection[] @relation("ConnectionToDevice")
@@ -47,7 +47,6 @@ model Req {
   httpMethod   HTTPMethods
   httpVersion  String
   isThreat     Boolean
-  threat       String?
   deviceId     String?
   connection   Connection  @relation(fields: [connectionId], references: [id])
   device       Device?     @relation(fields: [deviceId], references: [id])
@@ -61,6 +60,14 @@ model Res {
   reqId        String     @unique
   connection   Connection @relation(fields: [connectionId], references: [id])
   req          Req        @relation(fields: [reqId], references: [id])
+}
+
+model Threat {
+  id        String @id
+  keywords  String
+  published String
+  desc      String
+  baseScore Float
 }
 
 enum UserRole {

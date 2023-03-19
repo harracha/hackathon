@@ -20,7 +20,7 @@ const index = () => {
 
   async function login() {
     console.log("uso u login");
-    const res = await fetch("http://localhost:4000/auth/login", {
+    const res = await fetch("http://localhost:4000/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,12 +31,18 @@ const index = () => {
       }),
     });
     var ab = await res.json();
-    setAb(ab.uspjeh);
-    if (ab.uspjeh == true) {
-      router.push("/dashboard");
+    localStorage.setItem("token", JSON.stringify(ab));
+    if (ab.userRole == "DEFAULT") {
+      router.push("/user-dashboard");
     }
-    console.log(ab);
+    if (ab.userRole == "ADMIN") {
+      router.push("/admin-dashboard");
+    }
   }
+
+  useEffect(() => {
+    // fetch();
+  }, []);
 
   return (
     <div className="flex h-screen w-screen ">

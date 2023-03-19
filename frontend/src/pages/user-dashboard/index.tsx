@@ -7,6 +7,7 @@ import Header from "~/components/header/Header";
 import Icon from "~/components/Icon/Icon";
 import { Table } from "~/components/table/Table";
 import Link from "next/link";
+import UserProtected from "~/components/protections/UserProtected";
 interface device {
   id: string;
   name: string;
@@ -64,30 +65,32 @@ const index = () => {
       <Header />
 
       <div className="h-screen w-screen bg-accent-strong">
-        <div className="p-4 px-20">
-          <div className="h-20% w-full bg-accent-strong p-4">
-            <Link href="/user-dashboard/device-management/createDevice">
-              <Button>Add New Device</Button>
-            </Link>
+        <UserProtected>
+          <div className="p-4 px-20">
+            <div className="h-20% w-full bg-accent-strong p-4">
+              <Link href="/user-dashboard/device-management/createDevice">
+                <Button>Add New Device</Button>
+              </Link>
+            </div>
+            <div>Your devices:</div>
+            <Table
+              objects={devices || []}
+              titles={{ name: "name", status: "status" }}
+              onClick={(device) => {
+                router.push("user-dashboard/device/" + device.id);
+              }}
+              actionRow={(device) => {
+                return (
+                  <>
+                    <Button onClick={() => deleteDevice(device.id)}>
+                      <Icon icon="delete" className="bg-info " />
+                    </Button>
+                  </>
+                );
+              }}
+            ></Table>
           </div>
-          <div>Your devices:</div>
-          <Table
-            objects={devices || []}
-            titles={{ name: "name", status: "status" }}
-            onClick={(device) => {
-              router.push("user-dashboard/device/" + device.id);
-            }}
-            actionRow={(device) => {
-              return (
-                <>
-                  <Button onClick={() => deleteDevice(device.id)}>
-                    <Icon icon="delete" className="bg-info " />
-                  </Button>
-                </>
-              );
-            }}
-          ></Table>
-        </div>
+        </UserProtected>
       </div>
     </div>
   );

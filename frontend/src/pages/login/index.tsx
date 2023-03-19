@@ -48,7 +48,7 @@ const index = () => {
   return (
     <div className="flex h-screen w-screen ">
       <Logo />
-      <div className="h-screen w-[45%] flex-col items-center justify-center bg-black pt-52 shadow-2xl ">
+      <div className="h-screen w-[45%] flex-col items-center justify-center bg-black pt-44 shadow-2xl ">
         <div className="flex w-full justify-start px-4">
           <h1 className="title1 mb-4 flex justify-start">Login</h1>
         </div>

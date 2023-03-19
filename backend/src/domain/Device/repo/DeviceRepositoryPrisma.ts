@@ -48,6 +48,25 @@ export default class DeviceRepositoryPrisma extends DeviceRepository {
     return updatedDevice;
   }
 
+  async create(data: DeviceEntity) {
+    let response = await prisma.device.create({
+      data: {
+        name: "Tablet",
+        userId: "f7536653-e120-405c-8b41-34314a358565",
+        status: "ONLINE",
+        keywords: [
+          "hotbabes.com",
+          "Nigerijski Princ",
+          "Srbi za humanost",
+          "napaljene zene u blizini",
+        ],
+      },
+    });
+
+    let updatedDevice: DeviceEntity = response;
+    return updatedDevice;
+  }
+
   async delete(id: string) {
     let response = await prisma.device.delete({
       where: {

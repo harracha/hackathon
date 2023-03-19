@@ -49,6 +49,7 @@ model Req {
   isThreat     Boolean
   threat       String?
   deviceId     String?
+  googleUserId     String? @unique
   connection   Connection  @relation(fields: [connectionId], references: [id])
   device       Device?     @relation(fields: [deviceId], references: [id])
   res          Res?

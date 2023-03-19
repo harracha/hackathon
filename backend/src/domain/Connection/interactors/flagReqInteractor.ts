@@ -1,7 +1,7 @@
 import { ReqRepository } from "../../Req/repo/ReqRepository";
-import { updateUserEntity } from "../model/updateUserEntity";
-import { UserEntity } from "../model/UserEntity";
-import { UserRepository } from "../repo/UserRepository";
+import { updateUserEntity } from "../../User/model/updateUserEntity";
+import { UserEntity } from "../../User/model/UserEntity";
+import { UserRepository } from "../../User/repo/UserRepository";
 
 export default async function flagReqInteractor(
   reqRepository: ReqRepository,

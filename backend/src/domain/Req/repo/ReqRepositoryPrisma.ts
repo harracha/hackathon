@@ -179,4 +179,18 @@ export default class ReqRepositoryPrisma extends ReqRepository {
       return null;
     }
   }
+
+  async scan() {
+    // prisma Reqs
+    let datas = await prisma.req.findMany();
+
+    // map to ReqEntities
+    let reqs: ReqEntity[] = [];
+    datas.forEach((data: ReqEntity) => {
+      let req: ReqEntity = data;
+      reqs.push(req);
+    });
+
+    return reqs;
+  }
 }

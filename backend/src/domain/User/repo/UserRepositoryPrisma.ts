@@ -29,15 +29,13 @@ export default class UserRepositoryPrisma extends UserRepository {
 
   async getById(id: string) {
     let data = await prisma.user.findUnique({ where: { id: id } });
-    
-    if (data){
+
+    if (data) {
       let user: UserEntity = data;
       return user;
+    } else {
+      return null;
     }
-    else {
-      return null
-    }
-      
   }
 
   async create(user: UserEntity) {
@@ -58,7 +56,7 @@ export default class UserRepositoryPrisma extends UserRepository {
         googleUserId: user.googleUserId,
         userStatus: UserStatus.PENDING,
         keywords: keyw,
-        verCode: user.verCode
+        verCode: user.verCode,
       },
     });
 
@@ -173,5 +171,21 @@ export default class UserRepositoryPrisma extends UserRepository {
     } else {
       return false;
     }
+  }
+  async getByGoogleId(id: string): Promise<UserEntity | null> {
+    let query = await prisma.user.findUnique({
+      where: {
+        googleUserId: id,
+      },
+    });
+    return query;
+  }
+  async getByEmail(email: string): Promise<UserEntity | null> {
+    let query = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    return query;
   }
 }

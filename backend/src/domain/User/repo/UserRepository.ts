@@ -33,4 +33,10 @@ export abstract class UserRepository {
   async giveAdmin(id: string): Promise<UserEntity | null> {
     throw new Error("Method not implemented.");
   }
+  async getByGoogleId(id: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
+  async getByEmail(email: string): Promise<UserEntity | null> {
+    throw new Error("Method not implemented.");
+  }
 }

@@ -43,19 +43,19 @@ router.use(express.json());
 var jsonParser = parser.json();
 dotenv.config();
 
-router.get("/", async (req, res) => {
-  const token = req.headers.authorization?.split('')[1];
-  try {
-    const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    const userEmail = decoded.email;
+router.get("/", async (req:Request, res:Response) => {
+  // const token = req.headers.authorization?.split('')[1];
+  // try {
+  //   const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  //   const userEmail = decoded.email;
     
-    res.send(`${userEmail}`)
-  }
-  catch(error) {
-    console.log(error)
-  }
-  // let data: UserEntity[] = await listUsersInteractor(repo);
-  // res.status(200).json(data);
+  //   res.send(`${userEmail}`)
+  // }
+  // catch(error) {
+  //   console.log(error)
+  
+  let data: UserEntity[] = await listUsersInteractor(repo);
+  res.status(200).json(data);
 });
 
 router.get("/:id", async (req, res) => {

@@ -77,16 +77,27 @@ const Landing = () => {
         data-aos="fade-top"
         className="flex h-[60%] w-screen justify-center p-10 px-40 pb-32"
       >
-        <Link className="text-center" href="/login">
-          <h1 className="display3 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
-            Log in Here
+        <div className="flex-col items-start justify-between">
+          <h1 className="m-5 text-center shadow-xl transition-all duration-200">
+            Already a member?
           </h1>
-        </Link>
-        <Link className="text-center" href="/register">
-          <h1 className="display3 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
-            Register Here
+          <Link className="text-center" href="/login">
+            <h1 className="display3 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
+              Log in
+            </h1>
+          </Link>
+        </div>
+
+        <div className="flex-col items-start justify-between">
+          <h1 className="m-5 -ml-7 self-start text-center shadow-xl transition-all duration-200">
+            For the new users:
           </h1>
-        </Link>
+          <Link className="text-center" href="/register">
+            <h1 className="display3 m-5 cursor-pointer rounded-md border-info p-2 text-info shadow-xl transition-all duration-200 hover:text-accent-weak">
+              Register
+            </h1>
+          </Link>
+        </div>
       </div>
       <div>
         <h1 className="hidden">asdfasdfasdf</h1>
